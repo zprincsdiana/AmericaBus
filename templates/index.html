@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./static/css/bootstrap.min.css">
+    <script src="./static/script/jquery-3.5.1.slim.min.js"></script>
+    <script src="./static/script/popper.min.js"></script>
+    <script src="./static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./static/css/all.css">
+    <script src="./static/script/jquery.min.js"></script>
+    <script src="./static/script/function.js"></script>
+    <script src="./static/script/equality.js"></script>
+    <link rel="stylesheet" href="/static/fonts/css/font-awesome.min.css">
+    <script src="./static/script/a076d05399.js"></script>
+    <title>Prueba</title>
+</head>
+
+<style>
+    .panel-heading {
+        color: #31708f;
+        padding: 5px !important;
+        border-bottom: 1px solid transparent;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        font-size: 12px;
+    }
+
+    .panel-info>.panel-heading {
+        color: #31708f;
+        background-color: #d9edf7;
+        border-color: #bce8f1;
+    }
+
+    .card-body {
+        padding: 0;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .panel-body {
+        padding: 5px;
+    }
+
+    .input {
+        text-transform: uppercase;
+        height: 30px !important;
+    }
+
+    label {
+        margin-bottom: 5px;
+        margin-top: 10px;
+        font-size: 14px !important;
+    }
+
+    .modal-lg {
+
+        top: 15%;
+        max-width: 60% !important;
+        max-height: 500px !important;
+        overflow: auto !important;
+    }
+
+    .modal-xl {
+        top: 15%;
+
+    }
+
+    input {
+        text-transform: uppercase !important;
+    }
+
+    .custom-select {
+        max-height: 32px;
+    }
+</style>
+
+<script type="text/javascript">
+    window.addEventListener("keypress", function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+        }
+    }, false);
+</script>
+
+<body onload="abrirPantalla();">
+    <div class="container responsive">
+        <div class="card-body">
+            <div class="panel-heading card"
+                style="text-align: center; color: #fff; background-color: #337ab7; border-color: 337ab7;">
+                <strong>PRUEBA PASAJERO</strong>
+            </div>
+            <div class="panel-body card">
+                <div class="row" style="display: none;">
+                    <input type="text" name="" id="Idusu">
+                    <input type="text" name="" id="IdPasajero">
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label for="">Id Busqueda:</label>
+                        <input type="text" class="form-control form-control-sm" id="IdBusqueda" value=""
+                            onkeyup="saltar(event, 'btn_buscar');" autocomplete="off">
+                    </div>
+                    <div class="col-sm-1" style="padding-top: 3%;">
+                        <button class="btn btn-success btn-sm" type="button" id="btn_buscar">BUSCAR</button>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="">Nombre:</label>
+                        <input type="text" class="form-control form-control-sm" id="NombrePasajero" value="" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
