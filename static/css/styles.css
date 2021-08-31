@@ -1,4 +1,4 @@
-body{
+main{
     padding: 1em;
 }
 
@@ -28,3 +28,25 @@ body{
     font-family: 'Montserrat', sans-serif;
     font-style: oblique;
 }
+
+
+.navbar{
+    position:fixed;
+    width:100%;
+    /* background-color:transparent !important; */
+    z-index:10;
+    border-radius:0;
+    border-color:transparent;
+    top: 0%;
+  }
+
+  /* .navbar-default .navbar-nav > li > a{
+     color:#000; 
+    
+  } */
+
+  .img-carousel img{
+    object-fit: cover;
+    width: 100%;
+    height: 100vh;
+ }
