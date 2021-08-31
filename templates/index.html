@@ -4,77 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./static/css/bootstrap.min.css">
-    <script src="./static/script/jquery-3.5.1.slim.min.js"></script>
-    <script src="./static/script/popper.min.js"></script>
-    <script src="./static/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="./static/css/all.css">
-    <script src="./static/script/jquery.min.js"></script>
-    <script src="./static/script/function.js"></script>
-    <script src="./static/script/equality.js"></script>
-    <link rel="stylesheet" href="/static/fonts/css/font-awesome.min.css">
-    <script src="./static/script/a076d05399.js"></script>
-    <title>Prueba</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <script src="../static/script/jquery-3.5.1.slim.min.js"></script>
+    <script src="../static/script/popper.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/css/all.css">
+    <script src="../static/script/jquery.min.js"></script>
+    <script src="../static/script/function.js"></script>
+    <script src="../static/script/equality.js"></script>
+    <link rel="stylesheet" href="../static/fonts/css/font-awesome.min.css">
+    <link rel='stylesheet' type='text/css' media='screen' href='fontawesome-free/css/all.min.css'>
+    <script src="../static/script/a076d05399.js"></script>
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,700;1,100&display=swap" rel="stylesheet">
+    <!-- Icons -->
+
+    <title>América Bus</title>
 </head>
 
-<style>
-    .panel-heading {
-        color: #31708f;
-        padding: 5px !important;
-        border-bottom: 1px solid transparent;
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
-        font-size: 12px;
-    }
-
-    .panel-info>.panel-heading {
-        color: #31708f;
-        background-color: #d9edf7;
-        border-color: #bce8f1;
-    }
-
-    .card-body {
-        padding: 0;
-        margin-right: auto;
-        margin-left: auto;
-    }
-
-    .panel-body {
-        padding: 5px;
-    }
-
-    .input {
-        text-transform: uppercase;
-        height: 30px !important;
-    }
-
-    label {
-        margin-bottom: 5px;
-        margin-top: 10px;
-        font-size: 14px !important;
-    }
-
-    .modal-lg {
-
-        top: 15%;
-        max-width: 60% !important;
-        max-height: 500px !important;
-        overflow: auto !important;
-    }
-
-    .modal-xl {
-        top: 15%;
-
-    }
-
-    input {
-        text-transform: uppercase !important;
-    }
-
-    .custom-select {
-        max-height: 32px;
-    }
-</style>
 
 <script type="text/javascript">
     window.addEventListener("keypress", function (event) {
@@ -85,34 +38,268 @@
 </script>
 
 <body onload="abrirPantalla();">
-    <div class="container responsive">
-        <div class="card-body">
-            <div class="panel-heading card"
-                style="text-align: center; color: #fff; background-color: #337ab7; border-color: 337ab7;">
-                <strong>PRUEBA PASAJERO</strong>
-            </div>
-            <div class="panel-body card">
-                <div class="row" style="display: none;">
-                    <input type="text" name="" id="Idusu">
-                    <input type="text" name="" id="IdPasajero">
-                </div>
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label for="">Id Busqueda:</label>
-                        <input type="text" class="form-control form-control-sm" id="IdBusqueda" value=""
-                            onkeyup="saltar(event, 'btn_buscar');" autocomplete="off">
-                    </div>
-                    <div class="col-sm-1" style="padding-top: 3%;">
-                        <button class="btn btn-success btn-sm" type="button" id="btn_buscar">BUSCAR</button>
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="">Nombre:</label>
-                        <input type="text" class="form-control form-control-sm" id="NombrePasajero" value="" autocomplete="off">
-                    </div>
-                </div>
+
+    <!-- Nav Principal - navegación  -->
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light p-lg-3">
+        <img src="../static/images/Logo.jpg" class="image rounded float-left d-inline-block align-top" alt="..." >
+        <h1 class="title_init ">América Bus</h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Viajes directos</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Explorar</a>
+            </li>
+            <li class="nav-item active">
+              <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Ingresar <i class="fas fa-user fa-fw"></i></button> 
+            </li>          
+          </ul>
+        </div>
+    </nav>
+
+    <!-- main -->
+    <main>
+
+        <div class="btn-group">
+            <a class="nav-link dropdown-toggle dd" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Lista de opciones por aquí
+            </a>
+          
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="#">op 1</a>
+              <a class="dropdown-item" href="#">op 2</a>
+              <a class="dropdown-item" href="#">op 3</a>
             </div>
         </div>
-    </div>
+        <div class="btn-group">
+            <a class="nav-link dropdown-toggle dd" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Edad del conductor <b>22-50</b>
+            </a>
+          
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="#">op 1</a>
+              <a class="dropdown-item" href="#">op 2</a>
+              <a class="dropdown-item" href="#">op 3</a>
+            </div>
+        </div>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-4">
+              <select class="form-control fa box-select bg-light ">
+                <option selected class="fa">  &#xf5de; Origen  </option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+
+            <div class="col-lg-3">
+              <input type="date" class="form-control fa box-select bg-light" autocomplete="on" value="dd/mm/yyyy">
+            </div>
+
+             <div class="col-lg-3">
+              <input type="date" class="form-control fa box-select bg-light" autocomplete="on" value="dd/mm/yyyy">
+            </div>
+            
+            <div class="col-lg-2">
+              <button class="form-control btn btn-success fa box-select w-50"> &#xf002;</button>
+            </div>
+          </div>
+        </div>
+
+        <section>
+          <div class="row-cols-md-1">
+            <h3 class="m-4  fuente"><b>¿Por qué viajar con American Bus?</b></h3>
+          </div>
+         
+          <!-- Cards -->
+
+          <div class=" align-items-start">
+            <div class="row ">
+              <div class="col-md-3">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-tags"></i> Los mejores descuentos</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-money-bill-wave"></i> Los mejores precios</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title"> <i class="far fa-calendar-check"></i> Reserva de forma flexible</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>  
+        </section>
+
+        <section class="pt-3 pb-3">
+          <div class="container-fluid">
+              <div class="row">
+                  <div class="col-6">
+                      <h3 class="mb-3">Lugares a los que puedes viajar </h3>
+                      <p class="ml-2">Destinos hacia todos los puntos del Perú</p>
+                  </div>
+                  <div class="col-6 text-right">
+                      <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                          <i class="fa fa-arrow-left"></i>
+                      </a>
+                      <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators2" role="button" data-slide="next">
+                          <i class="fa fa-arrow-right"></i>
+                      </a>
+                  </div>
+                  <div class="col-12">
+                      <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+      
+                          <div class="carousel-inner">
+                              <div class="carousel-item active">
+                                  <div class="row">
+                                      <div class="col-md-4 mb-3">
+                                          <div class="card">
+                                              <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1590545651636-f0e7f151239f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80">
+                                              <div class="card-body">
+                                                  <h4 class="card-title">Arequipa</h4>
+                                                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      
+                                              </div>
+      
+                                          </div>
+                                      </div>
+                                      <div class="col-md-4 mb-3">
+                                          <div class="card">
+                                              <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=42b2d9ae6feb9c4ff98b9133addfb698">
+                                              <div class="card-body">
+                                                  <h4 class="card-title">Special title treatment</h4>
+                                                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-4 mb-3">
+                                          <div class="card">
+                                              <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3d2e8a2039c06dd26db977fe6ac6186a">
+                                              <div class="card-body">
+                                                  <h4 class="card-title">Special title treatment</h4>
+                                                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      
+                                              </div>
+                                          </div>
+                                      </div>
+      
+                                  </div>
+                              </div>
+                              <div class="carousel-item">
+                                  <div class="row">
+      
+                                      <div class="col-md-4 mb-3">
+                                          <div class="card">
+                                              <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1532771098148-525cefe10c23?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3f317c1f7a16116dec454fbc267dd8e4">
+                                              <div class="card-body">
+                                                  <h4 class="card-title">Special title treatment</h4>
+                                                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      
+                                              </div>
+      
+                                          </div>
+                                      </div>
+                                      <div class="col-md-4 mb-3">
+                                          <div class="card">
+                                              <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1532715088550-62f09305f765?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=ebadb044b374504ef8e81bdec4d0e840">
+                                              <div class="card-body">
+                                                  <h4 class="card-title">Special title treatment</h4>
+                                                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-4 mb-3">
+                                          <div class="card">
+                                              <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=0754ab085804ae8a3b562548e6b4aa2e">
+                                              <div class="card-body">
+                                                  <h4 class="card-title">Special title treatment</h4>
+                                                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      
+                                              </div>
+                                          </div>
+                                      </div>
+      
+                                  </div>
+                              </div>
+                              <div class="carousel-item">
+                                  <div class="row">
+      
+                                      <div class="col-md-4 mb-3">
+                                          <div class="card">
+                                              <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=ee8417f0ea2a50d53a12665820b54e23">
+                                              <div class="card-body">
+                                                  <h4 class="card-title">Special title treatment</h4>
+                                                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      
+                                              </div>
+      
+                                          </div>
+                                      </div>
+                                      <div class="col-md-4 mb-3">
+                                          <div class="card">
+                                              <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1532777946373-b6783242f211?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=8ac55cf3a68785643998730839663129">
+                                              <div class="card-body">
+                                                  <h4 class="card-title">Special title treatment</h4>
+                                                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-4 mb-3">
+                                          <div class="card">
+                                              <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1532763303805-529d595877c5?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=5ee4fd5d19b40f93eadb21871757eda6">
+                                              <div class="card-body">
+                                                  <h4 class="card-title">Special title treatment</h4>
+                                                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section
+
+    </main>
+
+  
 </body>
 
 </html>
