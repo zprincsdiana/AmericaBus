@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <script src="../static/script/jquery-3.5.1.slim.min.js"></script>
+    <script src="../static/script/popper.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/css/all.css">
+    <script src="../static/script/jquery.min.js"></script>
+    <script src="../static/script/function.js"></script>
+    <script src="../static/script/equality.js"></script>
+    <link rel="stylesheet" href="../static/fonts/css/font-awesome.min.css">
+    <link rel='stylesheet' type='text/css' media='screen' href='fontawesome-free/css/all.min.css'>
+    <script src="../static/script/a076d05399.js"></script>
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,700;1,100&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+
+
+    <title>América Bus</title>
+    <link rel="shortcut icon" href="../static/images/bus1.png" type="image/x-icon">
+</head>
+
+<script type="text/javascript">
+    window.addEventListener("keypress", function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+        }
+    }, false);
+</script>
+
+<body onload="abrirPantalla();">
+    <!-- Nav Principal - navegación  -->
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light p-lg-3">
+        <a href="/"><img src="../static/images/Logo.jpg" class="image rounded float-left d-inline-block align-top" alt="..."></a>
+        <a href="/" class="title_init text-decoration-none display-4 text-dark">América Bus</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Viajes directos</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Explorar</a>
+                </li>
+                {% if 'user' in session %}
+                <li class="dropdown show">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Bienvenido {{session['user']}}<i class="fas fa-user fa-fw"></i>
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        {% if 'rol' in session %}
+                        <a class="dropdown-item" href="#">Administrar cuentas</a>
+                        {% endif %}
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="/logout">Cerrar sesión</a>
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item active">
+                    <a href="/login" class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Ingresar<i
+                            class="fas fa-user fa-fw"></i></a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    {% block body %}
+
+    {% endblock %}
+
+</body>
+
+</html>
