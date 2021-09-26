@@ -6,6 +6,7 @@ from flask import Flask, render_template, jsonify, request, redirect, session, u
 import pyodbc
 
 from db.config import Connection
+from validation.Login import LoginForm
 
 app = Flask(__name__)
 
@@ -66,32 +67,38 @@ def logout():
 @app.route("/create")
 def create():
     departamentos = Destino().listDepartamentos()
-
-    return render_template('usuario/formulario.html', depas=departamentos)
+    formulario = LoginForm()
+    formulario.departamento.choices = ('undefined', 'Seleccione un departamento')
+    values = [("undefined", "Seleccione un departamento")]
+    for row in departamentos:
+        values.append((row.id_departamento, row.nombre))
+    formulario.departamento.choices = values
+    return render_template('usuario/formulario.html', form=formulario)
 
 
 @app.route("/register", methods=['POST'])
 def register():
-    if request.method == 'POST':
-        nombre = request.form['nombre']
-        apellidoP = request.form['apellidoPaterno']
-        apellidoM = request.form['apellidoPaterno']
-        fechaN = request.form['fechaNacimiento']
-        departamento = request.form['departamento']
-        direccion = request.form['direccion']
-        telefono = request.form['telefono']
-        contraseña = request.form['contraseña']
-        correo = request.form['correo']
-        #print(nombre + apellidoP + apellidoM + fechaN + departamento + direccion + telefono + correo + contraseña)
+    form = LoginForm(request.form)
+    if request.method == 'POST' and form.validate():
+        nombre = form.nombre.data
+        apellidoP = form.apellidoP.data
+        apellidoM = form.apellidoM.data
+        fechaN = form.fechaNacimiento.data
+        departamento = form.departamento.data
+        direccion = form.direccion.data
+        telefono = form.telefono.data
+        contraseña = form.contraseña.data
+        correo = form.correo.data
 
         try:
             Login().crearUsuario(nombre, apellidoP, apellidoM, telefono, departamento,
                                  fechaN, direccion, correo, contraseña)
             # enviar mensaje flash
-            flash('Usuario registrado correctamente')
+            flash('Usuario registrado correctamente', "success")
+            return redirect(url_for('login'))
         except Exception as e:
-            flash('Usuario no registrado correctamente')
-    return redirect(url_for('login'))
+            flash('Usuario no registrado', "danger")
+    return render_template('usuario/formulario.html', form=form)
 
 
 @app.route('/americanbus/usuarios', methods=['GET'])

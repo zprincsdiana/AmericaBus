@@ -8,62 +8,49 @@
                 <div class="card">
                     <div class="card-header">Registrar</div>
                     <div class="card-body">
+                    {% from "/usuario/_formhelpers.html" import render_field%}
                         <form action="/register" method="POST">
                             <div class="form-row">
                                 <div class="form-group col-md">
-                                    <label for="nombre">Nombre</label>
-                                    <input type="text" class="form-control" placeholder="Nombre" name="nombre">
+                                    {{ render_field(form.nombre, class="form-control") }}
                                 </div>
                                 <div class="form-group col-md">
-                                    <label for="apellidoPaterno">Apellido Paterno</label>
-                                    <input type="text" class="form-control" placeholder="Apellido Paterno"
-                                        name="apellidoPaterno">
+                                    {{ render_field(form.apellidoP, class="form-control") }}
                                 </div>
                                 <div class="form-group col-md">
-                                    <label for="apellidoMaterno">Apellido Materno</label>
-                                    <input type="text" class="form-control" placeholder="Apellido Materno"
-                                        name="apellidoMaterno">
+                                    {{ render_field(form.apellidoM, class="form-control") }}
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md">
-                                    <label for="inputCity">Telefono</label>
-                                    <input type="text" class="form-control" placeholder="Telefono" name="telefono">
+                                    {{ render_field(form.telefono, class="form-control") }}
                                 </div>
                                 <div class="form-group col-md">
-                                    <label for="inputState">Fecha de Nacimiento</label>
-                                    <input type="date" class="form-control" autocomplete="on" value="dd/mm/yyyy"
-                                        name="fechaNacimiento">
+                                    {{ render_field(form.fechaNacimiento,class="form-control") }}
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputCity">Direccion</label>
-                                    <input type="text" class="form-control" placeholder="Av. las palmeras "
-                                        name="direccion">
+                                    {{ render_field(form.direccion, class="form-control") }}
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputState">Departamento</label>
-                                    <select id="inputState" class="form-control" name="departamento">
-                                        <option value="undenifed">Seleccione Departamento...</option>
-                                        {% for depa in depas %}
-                                        <option value={{depa.id_departamento}}>{{ depa.nombre }}</option>
-                                        {% endfor%}
-
-
-                                    </select>
+                                    {{ render_field(form.departamento, class="form-control") }}
+{#                                    <label for="inputState">Departamento</label>#}
+{#                                    <select id="inputState" class="form-control" name="departamento">#}
+{#                                        <option value="undenifed">Seleccione Departamento...</option>#}
+{#                                        {% for depa in depas %}#}
+{#                                        <option value={{depa.id_departamento}}>{{ depa.nombre }}</option>#}
+{#                                        {% endfor%}#}
+{#                                    </select>#}
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md">
-                                    <label for="Correo">Correo</label>
-                                    <input type="email" class="form-control" placeholder="Correo" name="correo">
+                                    {{ render_field(form.correo, class="form-control") }}
                                 </div>
                                 <div class="form-group col-md">
-                                    <label for="Contraseña">Contraseña</label>
-                                    <input type="password" class="form-control" placeholder="Contraseña"
-                                        name="contraseña">
+                                    {{ render_field(form.contraseña, class="form-control") }}
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Registrar</button>
