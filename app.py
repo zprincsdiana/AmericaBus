@@ -134,6 +134,51 @@ def usuariosList():
         # jsonify convierte un arreglo a json
     return jsonify(result)
 
+@app.route("/destinos")
+def destinos():
+
+    return render_template('destinos/destinos.html')
+
+@app.route("/asientos")
+def asientos():
+
+    return render_template('asistencia/asientos.html')
+
+@app.route("/asistencia")
+def asistencia():
+
+    return render_template('asistencia/asistencia.html')
+
+
+@app.route("/estadisticas")
+def estadistica():
+
+    return render_template('estadisticas/estadisticas.html')
+
+@app.route("/pago")
+def pago():
+
+    return render_template('pago/pago.html')
+
+@app.route("/listaReservas")
+def listaReservas():
+    return render_template('reserva/listaReservas.html')
+
+@app.route("/detalle")
+def detalle():
+    return render_template('destinos/DestinosDetallados.html')
+
+@app.route("/administrar")
+def administrar():
+    return render_template('admin/administrar.html')
+
+@app.route("/generarReserva")
+def generarReserva():
+    return render_template('reserva/generarReserva.html')
+
+@app.route("/realizarResenia")
+def realizarResenia():
+    return render_template('usuario/realizarResenia.html')
 
 @app.route('/buscarPasajeroPorId')
 def buscarPasajeroPorId():
@@ -156,6 +201,32 @@ def buscarPasajeroPorId():
 
     return jsonify(result)
 
+
+################## MODIFICAR
+@app.route("/modificable")
+def modificable():
+    departamentos = Destino().listDepartamentos()
+    formulario = LoginForm()
+    formulario.departamento.choices = ('undefined', 'Seleccione un departamento')
+    values = [("undefined", "Seleccione un departamento")]
+    for row in departamentos:
+        values.append((row.id_departamento, row.nombre))
+    formulario.departamento.choices = values
+    return render_template('admin/formularioEditable.html', form=formulario)
+############################
+
+################## Viajes
+@app.route("/viajes")
+def viajes():
+    return render_template('usuario/DestinosDetallados.html')
+############################
+
+################## Mi cronograma
+@app.route("/cronograma")
+def cronograma():
+
+    return render_template('usuario/cronograma.html')
+############################
 
 @app.route('/guardarHistorialPasajero')
 def guardarHistorialPasajero():

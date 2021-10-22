@@ -2,6 +2,7 @@ function saltar(e, id) {
     (e.keyCode) ? k = e.keyCode : k = e.which;
     if (k == 13) { document.getElementById(id).focus(); }
 }
+$('body').scrollspy({ target: '#navbar-example' })
 
 function saltarselect(e) {
     $(".miClase").keypress(function (e) {

@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <main class="login-form mt-5">
+        <div class="container mt-5 ">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Mi cronograma de viaje</div>
+                        <div class="card-body">
+                            {% from "/usuario/_formhelpers.html" import render_field %}
+                            <form action="/register" method="POST">
+                                <div class="form-row">
+
+                                </div>
+                                <div class="form-row">
+                                    <table class="table table-striped text-center">
+                                        <thead>
+                                        <tr class="table-warning">
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Fecha de viaje</th>
+                                            <th scope="col">Destino</th>
+                                            <th scope="col">Asientos</th>
+                                            <th scope="col">USUARIO</th>
+                                            <th scope="col">CHOFER</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <div class=="row justify-content-center
+                                        ">
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>10/11/21</td>
+                                            <td>Arequipa</td>
+                                            <td>5</td>
+                                            <td><a class="btn btn-primary" href="/realizarResenia">Reseña</a></td>
+                                            <td><a class="btn btn-primary" href="/asistencia">Tomar asistencia</a></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>08/11/21</td>
+                                            <td>Cuzco</td>
+                                            <td>2</td>
+                                            <td><a class="btn btn-primary" href="/realizarResenia">Reseña</a></td>
+                                            <td><a class="btn btn-primary" href="/asistencia">Tomar asistencia</a></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td>25/10/21</td>
+                                            <td>Ica</td>
+                                            <td>3</td>
+                                            <td><a class="btn btn-primary" href="/realizarResenia">Reseña</a></td>
+                                            <td><a class="btn btn-primary" href="/asistencia">Tomar asistencia</a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+
+    </main>
+{% endblock %}

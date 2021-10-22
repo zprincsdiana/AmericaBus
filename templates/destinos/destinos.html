@@ -1,0 +1,189 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    <div class="container pt-5">
+        <div class="btn-group mb-2 pt-5">
+            <a class="nav-link dropdown-toggle dd" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                Lista de opciones por aquí
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">op 1</a>
+                <a class="dropdown-item" href="#">op 2</a>
+                <a class="dropdown-item" href="#">op 3</a>
+            </div>
+        </div>
+        <div class="btn-group mb-2">
+            <a class="nav-link dropdown-toggle dd" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                Edad del conductor <b>22-50</b>
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">op 1</a>
+                <a class="dropdown-item" href="#">op 2</a>
+                <a class="dropdown-item" href="#">op 3</a>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <select class="form-control fa box-select bg-light ">
+                        <option selected class="fa">Destino</option>
+                        <option value="1">Lima - Ica</option>
+                        <option value="2">Lima - Piura</option>
+                        <option value="3">Lima - Huaraza</option>
+                        <option value="1">Lima - Ica</option>
+                        <option value="2">Lima - Piura</option>
+                        <option value="3">Lima - Huaraza</option>
+                        <option value="1">Lima - Ica</option>
+                        <option value="2">Lima - Piura</option>
+                        <option value="3">Lima - Huaraza</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-3">
+                    <input type="date" class="form-control fa box-select bg-light" autocomplete="on" value="dd/mm/yyyy">
+                </div>
+
+                <div class="col-lg-3">
+                    <input type="date" class="form-control fa box-select bg-light" autocomplete="on" value="dd/mm/yyyy">
+                </div>
+
+                <div class="col-lg-2">
+                    <button class="form-control btn btn-success fa box-select w-50"> &#xf002;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container pt-3">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img class="img-fluid" alt="100%x280"
+                         src="https://images.unsplash.com/photo-1590545651636-f0e7f151239f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80">
+                    <div class="card-body">
+                        <h4 class="card-title"><a href="/detalle" class="stretched-link text-decoration-none text-dark">Lima - Arequipa</a></h4>
+                        <p class="card-text">With supporting text below as a natural lead-in
+                            to
+                            additional content.</p>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img class="img-fluid" alt="100%x280"
+                         src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=42b2d9ae6feb9c4ff98b9133addfb698">
+                    <div class="card-body">
+                        <h4 class="card-title">Lima - Huaraz</h4>
+                        <p class="card-text">With supporting text below as a natural lead-in
+                            to
+                            additional content.</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img class="img-fluid" alt="100%x280"
+                         src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3d2e8a2039c06dd26db977fe6ac6186a">
+                    <div class="card-body">
+                        <h4 class="card-title">Lima - Ica</h4>
+                        <p class="card-text">With supporting text below as a natural lead-in
+                            to
+                            additional content.</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img class="img-fluid" alt="100%x280"
+                         src="https://images.unsplash.com/photo-1590545651636-f0e7f151239f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80">
+                    <div class="card-body">
+                        <h4 class="card-title">Lima - Apurimac</h4>
+                        <p class="card-text">With supporting text below as a natural lead-in
+                            to
+                            additional content.</p>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img class="img-fluid" alt="100%x280"
+                         src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=42b2d9ae6feb9c4ff98b9133addfb698">
+                    <div class="card-body">
+                        <h4 class="card-title">Lima - Loreto</h4>
+                        <p class="card-text">With supporting text below as a natural lead-in
+                            to
+                            additional content.</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img class="img-fluid" alt="100%x280"
+                         src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3d2e8a2039c06dd26db977fe6ac6186a">
+                    <div class="card-body">
+                        <h4 class="card-title">Lima - Cajamarca</h4>
+                        <p class="card-text">With supporting text below as a natural lead-in
+                            to
+                            additional content.</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img class="img-fluid" alt="100%x280"
+                         src="https://images.unsplash.com/photo-1590545651636-f0e7f151239f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80">
+                    <div class="card-body">
+                        <h4 class="card-title">Lima - Iquitos</h4>
+                        <p class="card-text">With supporting text below as a natural lead-in
+                            to
+                            additional content.</p>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img class="img-fluid" alt="100%x280"
+                         src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=42b2d9ae6feb9c4ff98b9133addfb698">
+                    <div class="card-body">
+                        <h4 class="card-title">Lima - Piura</h4>
+                        <p class="card-text">With supporting text below as a natural lead-in
+                            to
+                            additional content.</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img class="img-fluid" alt="100%x280"
+                         src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3d2e8a2039c06dd26db977fe6ac6186a">
+                    <div class="card-body">
+                        <h4 class="card-title">Lima - Tacna</h4>
+                        <p class="card-text">With supporting text below as a natural lead-in
+                            to
+                            additional content.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

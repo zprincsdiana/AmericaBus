@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <main class="login-form mt-5">
+        <div class="container mt-5 ">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Registrar</div>
+                        <div class="card-body">
+                            {% from "/usuario/_formhelpers.html" import render_field %}
+                            <form action="/register" method="POST">
+                                <div class="form-row">
+                                    <div class="form-group col-md">
+                                        {{ render_field(form.nombre, class="form-control") }}
+                                    </div>
+                                    <div class="form-group col-md">
+                                        {{ render_field(form.apellidoP, class="form-control") }}
+                                    </div>
+                                    <div class="form-group col-md">
+                                        {{ render_field(form.apellidoM, class="form-control") }}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md">
+                                        {{ render_field(form.telefono, class="form-control") }}
+                                    </div>
+                                    <div class="form-group col-md">
+                                        {{ render_field(form.fechaNacimiento,class="form-control") }}
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        {{ render_field(form.direccion, class="form-control") }}
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        {{ render_field(form.departamento, class="form-control") }}
+                                        {#                                    <label for="inputState">Departamento</label>#}
+                                        {#                                    <select id="inputState" class="form-control" name="departamento">#}
+                                        {#                                        <option value="undenifed">Seleccione Departamento...</option>#}
+                                        {#                                        {% for depa in depas %}#}
+                                        {#                                        <option value={{depa.id_departamento}}>{{ depa.nombre }}</option>#}
+                                        {#                                        {% endfor%}#}
+                                        {#                                    </select>#}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md">
+                                        {{ render_field(form.correo, class="form-control") }}
+                                    </div>
+                                    <div class="form-group col-md">
+                                        {{ render_field(form.contraseña, class="form-control") }}
+                                    </div>
+                                </div>
+
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <p>DNI: No se puede modificar</p>
+                                        <input type="text" id="DNInoModificable" name="country" value="76665437"
+                                               readonly>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <button type="submit" class="btn btn-primary">Borrar Cuenta</button>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <a type="button" class="btn btn-primary" href="/administrar">
+                                            Volver</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    </main>
+{% endblock %}

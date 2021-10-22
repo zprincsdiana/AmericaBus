@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+{% block body %}
+    <main class="login-form mt-5">
+        <div class="container mt-5 ">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Generar Reserva</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label for="">Origen-Destino</label>
+                                    <input class="form-control" type="text" id="Origen_viaje" value="Lima - Arequipa">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="">Fecha</label>
+                                    <input class="form-control" type="date" id="Fecha_viaje">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="">Hora</label>
+                                    <input class="form-control" type="time" id="Hora_viaje">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label for="">Precio</label>
+                                    <input class="form-control" type="text" id="Precio_viaje" value="100">
+                                </div>
+                                <div class="col-sm-5">
+                                    <label for="" style="color: transparent;">Seleccionar Asiento</label>
+                                    <a href="/asientos" id="btn_SeleccionarAsientos" name="btn_SeleccionarAsientos"
+                                       class="btn btn-info text-white" type="button">
+                                        <i class="fas fa-chair" ></i> Seleccionar Asientos</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+{% endblock %}

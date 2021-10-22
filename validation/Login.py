@@ -13,6 +13,11 @@ from models.Destino import Destino
 
 
 class LoginForm(Form):
+    #agrege
+    DNI = StringField('DNI:', [validators.Regexp(r'^[\w]+$', message='Ingrese un apellido valido'),
+                                                  validators.Length(min=2, max=20,
+                                                                    message='El apellido es demasiado corto')])
+    ########################################
     nombre = StringField('Nombre:', [validators.Regexp(r'^[\w]+$', message='Ingrese un nombre valido'),
                                      validators.Length(min=2, max=20)])
     apellidoP = StringField('Apellido Paterno:', [validators.Regexp(r'^[\w]+$', message='Ingrese un apellido valido'),
