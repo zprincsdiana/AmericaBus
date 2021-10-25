@@ -22,11 +22,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,700;1,100&display=swap"
-          rel="stylesheet">
+        rel="stylesheet">
     <!-- Icons -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.js"
-            integrity="sha512-b3xr4frvDIeyC3gqR1/iOi6T+m3pLlQyXNuvn5FiRrrKiMUJK3du2QqZbCywH6JxS5EOfW0DY0M6WwdXFbCBLQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        integrity="sha512-b3xr4frvDIeyC3gqR1/iOi6T+m3pLlQyXNuvn5FiRrrKiMUJK3du2QqZbCywH6JxS5EOfW0DY0M6WwdXFbCBLQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <title>América Bus</title>
     <link rel="shortcut icon" href="../static/images/bus1.png" type="image/x-icon">
@@ -41,65 +41,67 @@
 </script>
 
 <body>
-<!-- Nav Principal - navegación  -->
+    <!-- Nav Principal - navegación  -->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light p-lg-3 pb-5">
-    <a href="/"><img src="../static/images/Logo.jpg" class="image rounded float-left d-inline-block align-top"
-                     alt="..."></a>
-    <a href="/" class="title_init text-decoration-none display-4 text-dark">América Bus</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+    <nav class="navbar navbar-expand-lg navbar-light bg-light p-lg-3 pb-5">
+        <a href="/"><img src="../static/images/Logo.jpg" class="image rounded float-left d-inline-block align-top"
+                alt="..."></a>
+        <a href="/" class="title_init text-decoration-none display-4 text-dark">América Bus</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
             aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
-        <ul class="navbar-nav">
-            {% if 'user' in session %}
+        <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
+            <ul class="navbar-nav">
+                {% if 'user' in session %}
                 <li class="nav-item ">
                     <a class="nav-link" href="/cronograma">Mis Viajes</a>
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="/listaReservas">Pagar Reservas</a>
                 </li>
-            {% endif %}
+                {% endif %}
 
-            <li class="nav-item">
-                <a class="nav-link" href="/destinos">Destinos</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/destinos">Destinos</a>
+                </li>
+                {% if 'user' in session %}
+                    {% if session['rol']!=0 %}
+                        <li class="nav-item">
+                            <div class="bg-secondary rounded nav-link text-white mr-1">Saldo: S/150.0</div>
+                        </li>
+                    {% endif %}
+                {% endif %}
 
-            <li class="nav-item">
-                <div class="bg-secondary rounded nav-link text-white mr-1">Saldo: S/150.0</div>
-            </li>
-
-            {% if 'user' in session %}
+                {% if 'user' in session %}
                 <li class="dropdown show">
                     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Bienvenido {{ session['user'] }}<i class="fas fa-user fa-fw"></i>
                     </a>
-
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         {% if 'rol' in session %}
-                            <a class="dropdown-item" href="/administrar">Administrar cuentas</a>
-                            <a class="dropdown-item" href="/estadisticas">Gráficos Estadisticos</a>
+                        <a class="dropdown-item" href="/administrar">Administrar cuentas</a>
+                        <a class="dropdown-item" href="/estadisticas">Gráficos Estadisticos</a>
                         {% endif %}
                         <a class="dropdown-item" href="/modificable">Editar Cuenta</a>
                         <a class="dropdown-item" href="/pago">Depositar</a>
                         <a class="dropdown-item" href="/logout">Cerrar sesión</a>
                     </div>
                 </li>
-            {% else %}
+                {% else %}
                 <li class="nav-item active">
                     <a href="/login" class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Ingresar<i
                             class="fas fa-user fa-fw"></i></a>
                 </li>
-            {% endif %}
-        </ul>
-    </div>
-</nav>
-{% block body %}
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    {% block body %}
 
-{% endblock %}
+    {% endblock %}
 
 </body>
 

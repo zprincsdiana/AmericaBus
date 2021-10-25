@@ -38,6 +38,8 @@ class LoginForm(Form):
     contraseña = PasswordField('Contraseña:', [validators.Required("Este campo es obligatorio"),
                                                validators.Length(min=8, max=35,
                                                                  message='Ingrese una contraseña mas larga')])
+    DNI = StringField('DNI:', [validators.Regexp(r'^[0-9]+$', message='Porfavor ingrese solo numeros'),
+                                         validators.Length(min=8, max=8, message='Escriba un DNI valido')])
     # submit = SubmitField('enviar')
 
     departamentos = Destino().listDepartamentos()

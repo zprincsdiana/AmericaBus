@@ -40,7 +40,7 @@ def entrar():
         contraseña = request.form['contraseña']
 
         login = Login().comprobarLogin(correo, contraseña)
-        print(type(login))
+        print(login)
         #comprobar si es de tipo lista
         if isinstance(login, pyodbc.Row):
             session['user'] = f'{login.nombre} {login.apellido_paterno}'
@@ -89,13 +89,17 @@ def register():
         telefono = form.telefono.data
         contraseña = form.contraseña.data
         correo = form.correo.data
+        dni = form.DNI.data
 
         try:
-            Login().crearUsuario(nombre, apellidoP, apellidoM, telefono, departamento,
-                                 fechaN, direccion, correo, contraseña)
+            login = Login().crearUsuario(nombre, apellidoP, apellidoM, telefono, departamento,
+                                 fechaN, direccion, correo, contraseña,dni)
             # enviar mensaje flash
-            flash('Usuario registrado correctamente', "success")
-            return redirect(url_for('login'))
+            if isinstance(login, bool):
+                flash('Usuario registrado correctamente', "success")
+                return redirect(url_for('login'))
+            else:
+                flash('Usuario no registrado', "danger")
         except Exception as e:
             flash('Usuario no registrado', "danger")
     return render_template('usuario/formulario.html', form=form)
@@ -174,7 +178,12 @@ def administrar():
 
 @app.route("/generarReserva")
 def generarReserva():
-    return render_template('reserva/generarReserva.html')
+
+    if 'user' in session:
+        return render_template('reserva/generarReserva.html')
+    else:
+        return redirect(url_for('login'))
+
 
 @app.route("/realizarResenia")
 def realizarResenia():
