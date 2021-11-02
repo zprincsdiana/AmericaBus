@@ -39,7 +39,7 @@ class Login:
             # abrir conexion
             con = Connection().conexion()
             cursor = con.cursor()
-            c = cursor.execute(sql,
+            cursor.execute(sql,
                                (idDepartamento, dni, nombre, apellidoPaterno, apellidoMaterno, correo, genph(contraseña)
                                 , telefono, direccion, fechaNacimiento))
             cursor.commit()

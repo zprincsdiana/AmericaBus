@@ -6,6 +6,8 @@ from flask import Flask, render_template, jsonify, request, redirect, session, u
 import pyodbc
 
 from db.config import Connection
+from models.Usuario import Usuario
+from validation.EditableForm import EditableForm
 from validation.Login import LoginForm
 
 app = Flask(__name__)
@@ -13,6 +15,8 @@ app = Flask(__name__)
 # settings
 app.secret_key = 'mysecretkey'
 
+#prueba conseguir el id de la sesion
+persona_id=0
 
 @app.after_request
 def add_header(r):
@@ -25,7 +29,8 @@ def add_header(r):
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    print(persona_id)
+    return render_template('index.html',id=persona_id)
 
 
 @app.route("/login")
@@ -35,6 +40,7 @@ def login():
 
 @app.route("/entrar", methods=['POST'])
 def entrar():
+    global persona_id
     if request.method == 'POST':
         correo = request.form['correo']
         contraseña = request.form['contraseña']
@@ -44,6 +50,7 @@ def entrar():
         #comprobar si es de tipo lista
         if isinstance(login, pyodbc.Row):
             session['user'] = f'{login.nombre} {login.apellido_paterno}'
+            persona_id = login.id_usuario
             if login.rol == 0:
                 session['rol'] = login.rol
             return redirect(url_for('index'))
@@ -103,6 +110,40 @@ def register():
         except Exception as e:
             flash('Usuario no registrado', "danger")
     return render_template('usuario/formulario.html', form=form)
+
+############ ACTAULIZAR USUARIO, CAMBIO SUS DATOS
+@app.route("/actualizarUsuario", methods=['POST'])
+def actualizar_user():
+    form = EditableForm(request.form)
+    print("es sadassaaaa")
+    if request.method == 'POST' and form.validate():
+        nombre = form.nombre.data
+        apellidoP = form.apellidoP.data
+        apellidoM = form.apellidoM.data
+        fechaN = form.fechaNacimiento.data
+        departamento = form.departamento.data
+        direccion = form.direccion.data
+        telefono = form.telefono.data
+        #contraseña = form.contraseña.data
+        correo = form.correo.data
+        dni = form.DNI.data
+
+
+
+        print(persona_id)
+        actualizar = Usuario().actualizarUsuario(nombre, apellidoP, apellidoM, telefono, departamento,
+                                fechaN, direccion, correo, dni, persona_id)
+        print(actualizar)
+        # enviar mensaje flash
+        if isinstance(actualizar, bool):
+                print("es correcto")
+        else:
+              print("no es correcto")
+        
+        flash('Usuario Actualizado correctamente', "success")
+    return "Hola"
+  
+
 
 
 @app.route('/americanbus/usuarios', methods=['GET'])
@@ -212,16 +253,32 @@ def buscarPasajeroPorId():
 
 
 ################## MODIFICAR
-@app.route("/modificable")
-def modificable():
+@app.route("/modificable/<id>")
+def modificable(id):
+    #instanciando
+    usuario = Usuario().traerDatos(id)
     departamentos = Destino().listDepartamentos()
-    formulario = LoginForm()
-    formulario.departamento.choices = ('undefined', 'Seleccione un departamento')
+    formUsuario = EditableForm()
+    formUsuario.departamento.default = usuario.id_departamento
+    #este procees es para que le default sirva
+    formUsuario.process()
+    formUsuario.nombre.data = usuario.nombre
+    formUsuario.apellidoM.data = usuario.apellido_materno
+    formUsuario.apellidoP.data = usuario.apellido_paterno
+    formUsuario.correo.data = usuario.correo
+    formUsuario.telefono.data = usuario.telefono
+    formUsuario.direccion.data = usuario.direccion
+    formUsuario.fechaNacimiento.data = usuario.fecha_nacimiento
+    formUsuario.DNI.data = usuario.dni
+    
+    
+
+    formUsuario.departamento.choices = ('undefined', 'Seleccione un departamento')
     values = [("undefined", "Seleccione un departamento")]
     for row in departamentos:
         values.append((row.id_departamento, row.nombre))
-    formulario.departamento.choices = values
-    return render_template('admin/formularioEditable.html', form=formulario)
+    formUsuario.departamento.choices = values
+    return render_template('admin/formularioEditable.html', form=formUsuario)
 ############################
 
 ################## Viajes

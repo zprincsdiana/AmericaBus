@@ -9,7 +9,7 @@
                         <div class="card-header">Registrar</div>
                         <div class="card-body">
                             {% from "/usuario/_formhelpers.html" import render_field %}
-                            <form action="/register" method="POST">
+                            <form action="/actualizarUsuario" method="POST">
                                 <div class="form-row">
                                     <div class="form-group col-md">
                                         {{ render_field(form.nombre, class="form-control") }}
@@ -50,25 +50,13 @@
                                         {{ render_field(form.correo, class="form-control") }}
                                     </div>
                                     <div class="form-group col-md">
-                                        {{ render_field(form.contraseña, class="form-control") }}
-                                    </div>
-                                </div>
-
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <p>DNI: No se puede modificar</p>
-                                        <input type="text" id="DNInoModificable" name="country" value="76665437"
-                                               readonly>
+                                        {{ render_field(form.DNI, class="form-control") }}
                                     </div>
                                 </div>
 
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <button type="submit" class="btn btn-primary">Borrar Cuenta</button>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <a type="button" class="btn btn-primary" href="/administrar">
