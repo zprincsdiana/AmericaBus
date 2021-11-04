@@ -36,7 +36,7 @@ class Usuario:
         return result
 
     def actualizarSaldo(self, saldo, id_usuario):
-        sql = "UPDATE usuario SET saldo=? WHERE  id_usuario = ? and estado = 0"
+        sql = "UPDATE usuario SET saldo=? WHERE id_usuario = ? and estado = 0"
         try:
             # abrir conexion
             con = Connection().conexion()
