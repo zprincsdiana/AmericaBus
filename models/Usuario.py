@@ -34,3 +34,17 @@ class Usuario:
             result = e
 
         return result
+
+    def actualizarSaldo(self, saldo, id_usuario):
+        sql = "UPDATE usuario SET saldo=? WHERE  id_usuario = ? and estado = 0"
+        try:
+            # abrir conexion
+            con = Connection().conexion()
+            cursor = con.cursor()
+            cursor.execute(sql, saldo, id_usuario)
+            cursor.commit()
+            cursor.close()
+            result = True
+        except Exception as e:
+            result = e
+        return result

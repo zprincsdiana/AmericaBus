@@ -78,7 +78,8 @@ def logout():
 def create():
     departamentos = Destino().listDepartamentos()
     formulario = LoginForm()
-    formulario.departamento.choices = ('undefined', 'Seleccione un departamento')
+    formulario.departamento.choices = (
+        'undefined', 'Seleccione un departamento')
     values = [("undefined", "Seleccione un departamento")]
     for row in departamentos:
         values.append((row.id_departamento, row.nombre))
@@ -115,7 +116,7 @@ def register():
     return render_template('usuario/formulario.html', form=form)
 
 
-############ ACTAULIZAR USUARIO, CAMBIO SUS DATOS
+# ACTAULIZAR USUARIO, CAMBIO SUS DATOS
 @app.route("/actualizarUsuario", methods=['POST'])
 def actualizar_user():
     form = EditableForm(request.form)
@@ -228,7 +229,8 @@ def listaReservas():
         asientoss = str(asientoss).replace('[', '')
         asientoss = str(asientoss).replace(']', '')
         session['detalle_venta']['cantidad_asientos'] = len(asientos)
-        session['detalle_venta']['importe'] = len(asientos) * float(session['detalle_venta']['precio'])
+        session['detalle_venta']['importe'] = len(
+            asientos) * float(session['detalle_venta']['precio'])
         session['detalle_venta']['asientos'] = asientoss
 
         asientos_select = AsientoBus().crearDetalleVenta(session['detalle_venta']['id_venta'],
@@ -330,7 +332,7 @@ def buscarPasajeroPorId():
     return jsonify(result)
 
 
-################## MODIFICAR
+# MODIFICAR
 @app.route("/modificable/<id>")
 def modificable(id):
     # instanciando
@@ -348,7 +350,8 @@ def modificable(id):
     formUsuario.direccion.data = usuario.direccion
     formUsuario.fechaNacimiento.data = usuario.fecha_nacimiento
     formUsuario.DNI.data = usuario.dni
-    formUsuario.departamento.choices = ('undefined', 'Seleccione un departamento')
+    formUsuario.departamento.choices = (
+        'undefined', 'Seleccione un departamento')
     values = [("undefined", "Seleccione un departamento")]
     for row in departamentos:
         values.append((row.id_departamento, row.nombre))
@@ -358,7 +361,7 @@ def modificable(id):
 
 ############################
 
-################## Viajes
+# Viajes
 @app.route("/viajes")
 def viajes():
     return render_template('usuario/DestinosDetallados.html')
@@ -366,9 +369,32 @@ def viajes():
 
 ############################
 
-################## Mi cronograma
-@app.route("/cronograma")
+# Mi cronograma
+@app.route("/cronograma", methods=['GET', 'POST'])
 def cronograma():
+
+    if request.method == 'POST' or request.method == 'GET' :
+
+        saldo = float(session['user']['saldo'])
+        total = float(request.form['total'])
+
+        print(saldo)
+        print(total)
+
+        if total <= saldo:
+            #restamos el total a pagar al saldo actual
+            session['user']['saldo'] = saldo - total
+            # llamamos al la funcion para que Actualice el registro
+            Usuario().actualizarSaldo(session['user']['saldo'],session['user']['id_usuario'])
+            # ejecuto la transaccion de pago
+            pagado = Venta().pagarVenta(session['user']['id_usuario'])
+            print(pagado)
+            if pagado:
+                flash('Viaje pagado', "success")
+        else:
+            flash('Saldo insuficiente', "danger")
+            return redirect(url_for('listaReservas'))
+
     return render_template('usuario/cronograma.html')
 
 
