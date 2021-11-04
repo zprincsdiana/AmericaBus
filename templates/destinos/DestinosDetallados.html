@@ -11,17 +11,14 @@
                                 <div class="col-sm-5">
                                     <div>
                                         <img class="img-fluid" alt="100%x280"
-                                             src="https://images.unsplash.com/photo-1590545651636-f0e7f151239f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80">
+                                             src="../../static/images/{{ data.imagen }}">
                                     </div>
                                 </div>
                                 <div class="col-sm-7">
                                     <div class="row">
                                         <div class="col-sm">
-                                            <h5>Arequipa</h5>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                                commodo consequat.</p>
+                                            <h5>{{ data.nombre_destino }}</h5>
+                                            <p>{{ data.descripcion }}</p>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -29,20 +26,16 @@
                                             <h5>Caracteristicas de Viaje</h5>
                                             <div class="row">
                                                 <div class="col-sm text-center">
-                                                    <span>Horario:</span><br>
-                                                    <span>10:00 am - 11:00 pm</span>
-                                                </div>
-                                                <div class="col-sm text-center">
-                                                    <span>Duracion:</span><br>
-                                                    <span>13h 30min</span>
+                                                    <span>Fecha de Viaje:</span><br>
+                                                    <span>{{ data.fecha_viaje }}</span>
                                                 </div>
                                                 <div class="col-sm text-center">
                                                     <span>Precio normal:</span><br>
-                                                    <span class="bg-success p-1 text-white">S/. 80</span>
+                                                    <span class="bg-success p-1 text-white">S/. {{ data.precio }}</span>
                                                 </div>
                                                 <div class="col-sm text-center">
                                                     <span>Precio VIP:</span><br>
-                                                    <span class="bg-success p-1 text-white">S/. 100</span>
+                                                    <span class="bg-success p-1 text-white">S/. {{ data.precio+30 }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -50,7 +43,7 @@
                                     <div class="col-sm">
                                         <div class="text-right mt-5">
                                             <div>
-                                                <a href="/generarReserva" class="btn btn-info btn-sm"><i
+                                                <a href="/generarReserva/{{ data.id_destino }}" class="btn btn-info btn-sm"><i
                                                         class="fas fa-ticket-alt"></i>Comprar</a>
                                             </div>
                                         </div>

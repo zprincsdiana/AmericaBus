@@ -11,13 +11,18 @@
                             <thead style="background-color: #dfe2e8;">
                                 <tr>
                                     <th>Nombre Destino</th>
-                                    <th>Precio</th>
+                                    <th>Importe</th>
                                     <th>Fecha</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody id="tbody_ListaReservas">
-
+                                {% for reserva in data %}
+                                <tr>
+                                    <td>{{ reserva.titulo }}</td>
+                                    <td>{{ reserva.importe }}</td>
+                                    <td>{{ reserva.Registro }}</td>
+                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                         <br>

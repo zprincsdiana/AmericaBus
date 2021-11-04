@@ -64,7 +64,7 @@
                 {% endif %}
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/destinos">Destinos</a>
+                    <a class="nav-link" href="/destinos" id="destino">Destinos</a>
                 </li>
                 {% if 'user' in session %}
                     {% if session['rol']!=0 %}
@@ -78,14 +78,14 @@
                 <li class="dropdown show">
                     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Bienvenido {{ session['user'] }}<i class="fas fa-user fa-fw"></i>
+                        Bienvenido {{ session['user'].nombre }} {{ session['user'].apellido_paterno  }}<i class="fas fa-user fa-fw"></i>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         {% if 'rol' in session %}
                         <a class="dropdown-item" href="/administrar">Administrar cuentas</a>
                         <a class="dropdown-item" href="/estadisticas">Gráficos Estadisticos</a>
                         {% endif %}
-                        <a class="dropdown-item" href="/modificable/{{ id }}">Editar Cuenta</a>
+                        <a class="dropdown-item" href="/modificable/{{ session['user'].id_usuario }}">Editar Cuenta</a>
                         <a class="dropdown-item" href="/pago">Depositar</a>
                         <a class="dropdown-item" href="/logout">Cerrar sesión</a>
                     </div>

@@ -1,3 +1,9 @@
+$(document).ready(function (){
+    $('.destino').click(function () {
+        console.log('hola mundo')
+    })
+});
+
 function saltar(e, id) {
     (e.keyCode) ? k = e.keyCode : k = e.which;
     if (k == 13) { document.getElementById(id).focus(); }

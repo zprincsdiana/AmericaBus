@@ -1,7 +1,4 @@
-from flask.json import dump
 from db.config import Connection
-from werkzeug.security import generate_password_hash as genph
-from werkzeug.security import check_password_hash as checkph
 
 
 class Usuario:

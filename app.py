@@ -1,4 +1,6 @@
 from flask.helpers import flash
+
+from models.AsientoBus import AsientoBus
 from models.Destino import Destino
 from flask.json import dump
 from models.Login import Login
@@ -7,6 +9,7 @@ import pyodbc
 
 from db.config import Connection
 from models.Usuario import Usuario
+from models.Venta import Venta
 from validation.EditableForm import EditableForm
 from validation.Login import LoginForm
 
@@ -15,8 +18,6 @@ app = Flask(__name__)
 # settings
 app.secret_key = 'mysecretkey'
 
-#prueba conseguir el id de la sesion
-persona_id=0
 
 @app.after_request
 def add_header(r):
@@ -29,8 +30,7 @@ def add_header(r):
 
 @app.route("/")
 def index():
-    print(persona_id)
-    return render_template('index.html',id=persona_id)
+    return render_template('index.html')
 
 
 @app.route("/login")
@@ -40,24 +40,27 @@ def login():
 
 @app.route("/entrar", methods=['POST'])
 def entrar():
-    global persona_id
     if request.method == 'POST':
         correo = request.form['correo']
         contraseña = request.form['contraseña']
 
         login = Login().comprobarLogin(correo, contraseña)
         print(login)
-        #comprobar si es de tipo lista
+        # comprobar si es de tipo lista
         if isinstance(login, pyodbc.Row):
-            session['user'] = f'{login.nombre} {login.apellido_paterno}'
-            persona_id = login.id_usuario
+            session['user'] = {
+                'id_usuario': login.id_usuario,
+                'nombre': login.nombre,
+                'apellido_paterno': login.apellido_paterno
+            }
+            print(session['array'])
             if login.rol == 0:
                 session['rol'] = login.rol
             return redirect(url_for('index'))
         elif isinstance(login, bool):
-            flash("El correo no existe","danger")
+            flash("El correo no existe", "danger")
         else:
-            flash("Las credenciales no coinciden","danger")
+            flash("Las credenciales no coinciden", "danger")
         return redirect(url_for('login'))
 
 
@@ -100,7 +103,7 @@ def register():
 
         try:
             login = Login().crearUsuario(nombre, apellidoP, apellidoM, telefono, departamento,
-                                 fechaN, direccion, correo, contraseña,dni)
+                                         fechaN, direccion, correo, contraseña, dni)
             # enviar mensaje flash
             if isinstance(login, bool):
                 flash('Usuario registrado correctamente', "success")
@@ -111,11 +114,11 @@ def register():
             flash('Usuario no registrado', "danger")
     return render_template('usuario/formulario.html', form=form)
 
+
 ############ ACTAULIZAR USUARIO, CAMBIO SUS DATOS
 @app.route("/actualizarUsuario", methods=['POST'])
 def actualizar_user():
     form = EditableForm(request.form)
-    print("es sadassaaaa")
     if request.method == 'POST' and form.validate():
         nombre = form.nombre.data
         apellidoP = form.apellidoP.data
@@ -124,26 +127,22 @@ def actualizar_user():
         departamento = form.departamento.data
         direccion = form.direccion.data
         telefono = form.telefono.data
-        #contraseña = form.contraseña.data
+        # contraseña = form.contraseña.data
         correo = form.correo.data
         dni = form.DNI.data
 
+        try:
+            actualizar = Usuario().actualizarUsuario(nombre, apellidoP, apellidoM, telefono, departamento,
+                                                     fechaN, direccion, correo, dni, session['user']['id_usuario'])
 
-
-        print(persona_id)
-        actualizar = Usuario().actualizarUsuario(nombre, apellidoP, apellidoM, telefono, departamento,
-                                fechaN, direccion, correo, dni, persona_id)
-        print(actualizar)
-        # enviar mensaje flash
-        if isinstance(actualizar, bool):
-                print("es correcto")
-        else:
-              print("no es correcto")
-        
-        flash('Usuario Actualizado correctamente', "success")
-    return "Hola"
-  
-
+            # enviar mensaje flash
+            if isinstance(actualizar, bool):
+                flash('Usuario actualizado correctamente', "success")
+            else:
+                flash('Usuario no actualizado', "danger")
+        except Exception as e:
+            flash('Usuario no actualizado', "danger")
+    return render_template('admin/formularioEditable.html', form=form)
 
 
 @app.route('/americanbus/usuarios', methods=['GET'])
@@ -152,7 +151,7 @@ def usuariosList():
     try:
         cursor = Connection().conexion().cursor()
         cursor.execute('SELECT * FROM usuario')
-        #usuario = cursor.fetchall()
+        # usuario = cursor.fetchall()
 
         # opcion 3: como la opcion 1 pero mas simplificado
         columns = [column[0] for column in cursor.description]
@@ -162,16 +161,16 @@ def usuariosList():
 
         # opcion 1: con nombre de los indices osea los campos
         # for row in usuario:
-            # list convierte cualquier fila ya sea tupla en arreglo => [ ]
-            # print(list(row))
-            # append es como un push
-            # data.append(list(row))
-            #res = {'id': row[0], 'nombre': row[1], 'telefono': row[2], 'email': row[3]}
-            # data.append(res)
+        # list convierte cualquier fila ya sea tupla en arreglo => [ ]
+        # print(list(row))
+        # append es como un push
+        # data.append(list(row))
+        # res = {'id': row[0], 'nombre': row[1], 'telefono': row[2], 'email': row[3]}
+        # data.append(res)
 
         # opcion 2: sin indices
-        #var = [list(row) for row in usuario]
-        #data = var
+        # var = [list(row) for row in usuario]
+        # data = var
         cursor.close()
         print(data)
     except Exception as e:
@@ -179,49 +178,126 @@ def usuariosList():
         # jsonify convierte un arreglo a json
     return jsonify(result)
 
+
+@app.route("/asientos", methods=['POST'])
+def asientos():
+    if request.method == 'POST':
+        id_destino = request.form['id_destino']
+        id_bus = request.form['id_bus'].split(sep=',')
+        id_usuario = request.form['id_usuario']
+
+        try:
+            # retorna el id de la venta creada
+            id_venta = Venta().crearVenta(id_usuario, id_bus[0], id_destino)
+            print(id_venta[0])
+            session['detalle_venta'] = {
+                'id_venta': id_venta[0],
+                'precio': id_bus[1],
+                'cantidad_asientos': 0,
+                'importe': 0,
+                'estado': 0,
+                'asientos': [0, 0, 0]
+            }
+            asiento = AsientoBus().listarAsientos(id_bus[0])
+            print(asiento)
+            columns = [column[0] for column in asiento.description]
+            data = []
+            for row in asiento.fetchall():
+                data.append(dict(zip(columns, row)))
+            print(data)
+        except Exception as e:
+            print(e)
+    return render_template('asistencia/asientos.html', data=data)
+
+
+@app.route("/listaReservas", methods=['GET','POST'])
+def listaReservas():
+    if request.method == 'POST':
+        asientos = (request.form.getlist('check'))
+        # pasar los id a int
+        ids_asientos = [int(row) for row in request.form.getlist('check')]
+        # convertir de una arreglo a tupla
+        ids_asientitos = str(tuple(ids_asientos))
+        asientos_select = AsientoBus().asientosSeleccionados(ids_asientitos).fetchall()
+
+        asientoss = []
+        # convertir en un solo arreglo los numeros de asientos
+        for row in asientos_select:
+            asientoss.append(list(row))
+
+        asientoss = str(asientoss).replace('[', '')
+        asientoss = str(asientoss).replace(']', '')
+        session['detalle_venta']['cantidad_asientos'] = len(asientos)
+        session['detalle_venta']['importe'] = len(asientos) * float(session['detalle_venta']['precio'])
+        session['detalle_venta']['asientos'] = asientoss
+
+        asientos_select = AsientoBus().crearDetalleVenta(session['detalle_venta']['id_venta'],
+                                                         session['detalle_venta']['precio'],
+                                                         session['detalle_venta']['cantidad_asientos'],
+                                                         session['detalle_venta']['importe'],
+                                                         session['detalle_venta']['estado'],
+                                                         session['detalle_venta']['asientos'])
+
+        print(asientos_select)
+    reservas = Venta().listReservas(session['user']['id_usuario'])
+    columns = [column[0] for column in reservas.description]
+    data = []
+    for row in reservas.fetchall():
+        data.append(dict(zip(columns, row)))
+    print(data)
+    return render_template('reserva/listaReservas.html',data=data)
+
+
 @app.route("/destinos")
 def destinos():
+    destino = Destino().listDestino()
+    columns = [column[0] for column in destino.description]
+    data = []
+    for row in destino.fetchall():
+        data.append(dict(zip(columns, row)))
+    print(data)
+    return render_template('destinos/destinos.html', data=data)
 
-    return render_template('destinos/destinos.html')
-
-@app.route("/asientos")
-def asientos():
-
-    return render_template('asistencia/asientos.html')
 
 @app.route("/asistencia")
 def asistencia():
-
     return render_template('asistencia/asistencia.html')
 
 
 @app.route("/estadisticas")
 def estadistica():
-
     return render_template('estadisticas/estadisticas.html')
+
 
 @app.route("/pago")
 def pago():
-
     return render_template('pago/pago.html')
 
-@app.route("/listaReservas")
-def listaReservas():
-    return render_template('reserva/listaReservas.html')
 
-@app.route("/detalle")
-def detalle():
-    return render_template('destinos/DestinosDetallados.html')
+@app.route("/detalle/<id>")
+def detalle(id):
+    destino = Destino().getDestino(id)
+    columns = [column[0] for column in destino.description]
+    for row in destino.fetchall():
+        data = (dict(zip(columns, row)))
+    return render_template('destinos/DestinosDetallados.html', data=data)
+
 
 @app.route("/administrar")
 def administrar():
     return render_template('admin/administrar.html')
 
-@app.route("/generarReserva")
-def generarReserva():
 
+@app.route("/generarReserva/<id>")
+def generarReserva(id):
+    bus = Destino().getBus(id)
+    columns = [column[0] for column in bus.description]
+    data = []
+    for row in bus.fetchall():
+        data.append(dict(zip(columns, row)))
+    print(data)
     if 'user' in session:
-        return render_template('reserva/generarReserva.html')
+        return render_template('reserva/generarReserva.html', data=data)
     else:
         return redirect(url_for('login'))
 
@@ -229,6 +305,7 @@ def generarReserva():
 @app.route("/realizarResenia")
 def realizarResenia():
     return render_template('usuario/realizarResenia.html')
+
 
 @app.route('/buscarPasajeroPorId')
 def buscarPasajeroPorId():
@@ -255,12 +332,12 @@ def buscarPasajeroPorId():
 ################## MODIFICAR
 @app.route("/modificable/<id>")
 def modificable(id):
-    #instanciando
+    # instanciando
     usuario = Usuario().traerDatos(id)
     departamentos = Destino().listDepartamentos()
     formUsuario = EditableForm()
     formUsuario.departamento.default = usuario.id_departamento
-    #este procees es para que le default sirva
+    # este procees es para que le default sirva
     formUsuario.process()
     formUsuario.nombre.data = usuario.nombre
     formUsuario.apellidoM.data = usuario.apellido_materno
@@ -270,28 +347,30 @@ def modificable(id):
     formUsuario.direccion.data = usuario.direccion
     formUsuario.fechaNacimiento.data = usuario.fecha_nacimiento
     formUsuario.DNI.data = usuario.dni
-    
-    
-
     formUsuario.departamento.choices = ('undefined', 'Seleccione un departamento')
     values = [("undefined", "Seleccione un departamento")]
     for row in departamentos:
         values.append((row.id_departamento, row.nombre))
     formUsuario.departamento.choices = values
     return render_template('admin/formularioEditable.html', form=formUsuario)
+
+
 ############################
 
 ################## Viajes
 @app.route("/viajes")
 def viajes():
     return render_template('usuario/DestinosDetallados.html')
+
+
 ############################
 
 ################## Mi cronograma
 @app.route("/cronograma")
 def cronograma():
-
     return render_template('usuario/cronograma.html')
+
+
 ############################
 
 @app.route('/guardarHistorialPasajero')

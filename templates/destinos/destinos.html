@@ -61,129 +61,20 @@
     </div>
     <div class="container pt-3">
         <div class="row">
+            {% for destino in data %}
             <div class="col-md-4 mb-3">
                 <div class="card">
                     <img class="img-fluid" alt="100%x280"
-                         src="https://images.unsplash.com/photo-1590545651636-f0e7f151239f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80">
+                         src="../static/images/{{ destino.imagen }}">
                     <div class="card-body">
-                        <h4 class="card-title"><a href="/detalle" class="stretched-link text-decoration-none text-dark">Lima - Arequipa</a></h4>
-                        <p class="card-text">With supporting text below as a natural lead-in
-                            to
-                            additional content.</p>
-
+                        <h4 class="card-title"><a href="/detalle/{{ destino.id_destino }}" class="stretched-link text-decoration-none text-dark">{{ destino.titulo }}</a></h4>
+                        <p class="card-text">{{ destino.descripcion }}</p>
                     </div>
 
                 </div>
             </div>
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <img class="img-fluid" alt="100%x280"
-                         src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=42b2d9ae6feb9c4ff98b9133addfb698">
-                    <div class="card-body">
-                        <h4 class="card-title">Lima - Huaraz</h4>
-                        <p class="card-text">With supporting text below as a natural lead-in
-                            to
-                            additional content.</p>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <img class="img-fluid" alt="100%x280"
-                         src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3d2e8a2039c06dd26db977fe6ac6186a">
-                    <div class="card-body">
-                        <h4 class="card-title">Lima - Ica</h4>
-                        <p class="card-text">With supporting text below as a natural lead-in
-                            to
-                            additional content.</p>
-
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <img class="img-fluid" alt="100%x280"
-                         src="https://images.unsplash.com/photo-1590545651636-f0e7f151239f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80">
-                    <div class="card-body">
-                        <h4 class="card-title">Lima - Apurimac</h4>
-                        <p class="card-text">With supporting text below as a natural lead-in
-                            to
-                            additional content.</p>
 
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <img class="img-fluid" alt="100%x280"
-                         src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=42b2d9ae6feb9c4ff98b9133addfb698">
-                    <div class="card-body">
-                        <h4 class="card-title">Lima - Loreto</h4>
-                        <p class="card-text">With supporting text below as a natural lead-in
-                            to
-                            additional content.</p>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <img class="img-fluid" alt="100%x280"
-                         src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3d2e8a2039c06dd26db977fe6ac6186a">
-                    <div class="card-body">
-                        <h4 class="card-title">Lima - Cajamarca</h4>
-                        <p class="card-text">With supporting text below as a natural lead-in
-                            to
-                            additional content.</p>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <img class="img-fluid" alt="100%x280"
-                         src="https://images.unsplash.com/photo-1590545651636-f0e7f151239f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80">
-                    <div class="card-body">
-                        <h4 class="card-title">Lima - Iquitos</h4>
-                        <p class="card-text">With supporting text below as a natural lead-in
-                            to
-                            additional content.</p>
-
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <img class="img-fluid" alt="100%x280"
-                         src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=42b2d9ae6feb9c4ff98b9133addfb698">
-                    <div class="card-body">
-                        <h4 class="card-title">Lima - Piura</h4>
-                        <p class="card-text">With supporting text below as a natural lead-in
-                            to
-                            additional content.</p>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <img class="img-fluid" alt="100%x280"
-                         src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3d2e8a2039c06dd26db977fe6ac6186a">
-                    <div class="card-body">
-                        <h4 class="card-title">Lima - Tacna</h4>
-                        <p class="card-text">With supporting text below as a natural lead-in
-                            to
-                            additional content.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 {% endblock %}
