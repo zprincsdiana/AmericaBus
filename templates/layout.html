@@ -69,7 +69,7 @@
                 {% if 'user' in session %}
                     {% if session['rol']!=0 %}
                         <li class="nav-item">
-                            <div class="bg-secondary rounded nav-link text-white mr-1">Saldo: S/150.0</div>
+                            <div class="bg-secondary rounded nav-link text-white mr-1">Saldo: S/. {{ session['user'].saldo }}</div>
                         </li>
                     {% endif %}
                 {% endif %}

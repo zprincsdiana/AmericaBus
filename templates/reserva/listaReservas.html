@@ -1,39 +1,70 @@
 {% extends 'layout.html' %}
 {% block body %}
-<main class="login-form mt-5">
-    <div class="container mt-5 ">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Lista de Reservas</div>
-                    <div class="card-body">
-                        <table id="tabla_ListaReservas" class="table table-bordered">
-                            <thead style="background-color: #dfe2e8;">
-                                <tr>
-                                    <th>Nombre Destino</th>
-                                    <th>Importe</th>
-                                    <th>Fecha</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody_ListaReservas">
-                                {% for reserva in data %}
-                                <tr>
-                                    <td>{{ reserva.titulo }}</td>
-                                    <td>{{ reserva.importe }}</td>
-                                    <td>{{ reserva.Registro }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                        <br>
-                        <button id="btn_PagarTodo" class="btn btn-success btn-sm text-decoration-none" type="button" value="btn_PagarTodo"><i
-                                class="fas fa-money-bill-wave"></i><a href="/cronograma" class="text-white">Pagar Todo</a></button>
-                        <button id="btn_AgregarViajes" class="btn btn-info btn-sm" type="button" value="btn_AgregarViajes"><i
-                                class="far fa-plus-square"></i> <a href="/destinos" class="text-white">Agregar Viajes</a></button>
+    <main class="login-form mt-5">
+        <div class="container mt-5 ">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <form action="/cronograma" method="post">
+                            <div class="card-header">Lista de Reservas</div>
+                            <div class="card-body">
+                                {% if not data %}
+                                    <div class="alert alert-primary" role="alert">
+                                        No tienes Reservas, Agregue Viajes!
+                                    </div><br>
+                                {% endif %}
+                                <input type="hidden" name="saldo" value="{{ session['user'].saldo }}">
+                                <table id="tabla_ListaReservas" class="table table-bordered text-center">
+                                    <thead style="background-color: #dfe2e8;">
+                                    <tr>
+                                        <th>Nombre Destino</th>
+                                        <th>Asientos</th>
+                                        <th>Importe (S/.)</th>
+                                        <th>Fecha</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="tbody_ListaReservas">
+                                    {% for reserva in data %}
+                                        <tr>
+                                            <td>{{ reserva.titulo }}</td>
+                                            <td>{{ reserva.asientos }}</td>
+                                            <td>S/. {{ reserva.importe }}</td>
+                                            <td>{{ reserva.Registro }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <button id="btn_AgregarViajes" class="btn btn-info btn-sm" type="button"
+                                                value="btn_AgregarViajes"><i
+                                                class="far fa-plus-square"></i> <a href="/destinos" class="text-white">Agregar
+                                            Viajes</a></button>
+                                    </div>
+                                    <div class="col-sm">
+                                        {% if data %}
+                                            <span>Total: S/. {{ data[0].total_pagar }}</span>
+                                            <button id="btn_PagarTodo"
+                                                    class="btn btn-success btn-sm text-decoration-none"
+                                                    type="button"
+                                                    value="btn_PagarTodo"><i
+                                                    class="fas fa-money-bill-wave"></i><a href="/cronograma"
+                                                                                          class="text-white">Pagar
+                                                Todo</a></button>
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function () {
+                                    console.log("holam undo")
+                                });
+                            </script>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 {% endblock %}

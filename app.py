@@ -51,9 +51,9 @@ def entrar():
             session['user'] = {
                 'id_usuario': login.id_usuario,
                 'nombre': login.nombre,
-                'apellido_paterno': login.apellido_paterno
+                'apellido_paterno': login.apellido_paterno,
+                'saldo': login.saldo
             }
-            print(session['array'])
             if login.rol == 0:
                 session['rol'] = login.rol
             return redirect(url_for('index'))
@@ -210,7 +210,7 @@ def asientos():
     return render_template('asistencia/asientos.html', data=data)
 
 
-@app.route("/listaReservas", methods=['GET','POST'])
+@app.route("/listaReservas", methods=['GET', 'POST'])
 def listaReservas():
     if request.method == 'POST':
         asientos = (request.form.getlist('check'))
@@ -218,7 +218,7 @@ def listaReservas():
         ids_asientos = [int(row) for row in request.form.getlist('check')]
         # convertir de una arreglo a tupla
         ids_asientitos = str(tuple(ids_asientos))
-        asientos_select = AsientoBus().asientosSeleccionados(ids_asientitos).fetchall()
+        asientos_select = AsientoBus().asientosSeleccionados(ids_asientitos)
 
         asientoss = []
         # convertir en un solo arreglo los numeros de asientos
@@ -239,13 +239,14 @@ def listaReservas():
                                                          session['detalle_venta']['asientos'])
 
         print(asientos_select)
+
     reservas = Venta().listReservas(session['user']['id_usuario'])
     columns = [column[0] for column in reservas.description]
     data = []
     for row in reservas.fetchall():
         data.append(dict(zip(columns, row)))
     print(data)
-    return render_template('reserva/listaReservas.html',data=data)
+    return render_template('reserva/listaReservas.html', data=data)
 
 
 @app.route("/destinos")

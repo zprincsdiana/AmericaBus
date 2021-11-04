@@ -15,14 +15,18 @@ class AsientoBus:
             result = e
         return result
 
-    def asientosSeleccionados(self, ids_asientos):
-        sql = f"SELECT numero_asiento FROM asientos where id_asiento in {ids_asientos}"
+    def asientosSeleccionados(self, ids_asientos, ):
+        sql1 = f"UPDATE asientos SET estado = 1 where id_asiento in {ids_asientos}"
+
         try:
             # abrir conexion
             con = Connection().conexion()
             cursor = con.cursor()
-            cursor.execute(sql)
-            return cursor
+            cursor.execute(sql1)
+            cursor.commit()
+
+            sql = f"SELECT numero_asiento FROM asientos where id_asiento in {ids_asientos}"
+            result = cursor.execute(sql).fetchall()
             cursor.close()
         except Exception as e:
             result = e
