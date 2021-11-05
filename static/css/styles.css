@@ -104,3 +104,9 @@ body{
     max-width: 100%;
     height: auto;
 }
+
+.table-fixed {
+    max-height: 300px;
+    overflow: auto;
+    display:inline-block;
+  }

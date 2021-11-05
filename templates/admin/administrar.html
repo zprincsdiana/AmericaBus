@@ -1,62 +1,61 @@
 {% extends 'layout.html' %}
 {% block body %}
-    <main class="login-form mt-5">
-        <div class="container mt-5 ">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card shadow">
-                        <div class="card-header">Administrar Cuentas</div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <form class="form-inline">
-                                        <div class="form-group mb-2">
-                                            <label for="staticEmail2" class="sr-only">Nombre</label>
-                                            <input type="text"  class="form-control" id=""
-                                                   placeholder="Nombre"  value="">
-                                        </div>
-                                        <div class="form-group mx-sm-3 mb-2">
-                                            <label for="inputPassword2" class="sr-only">DNI</label>
-                                            <input type="password" class="form-control" id=""
-                                                   placeholder="DNI">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-search"></i>Buscar</button>
-                                    </form>
-                                    <table id="tabla_ListaReservas" class="table table-bordered">
-                                        <thead style="background-color: #dfe2e8;">
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Nombre</th>
-                                            <th>Apellido Paterno</th>
-                                            <th>Apellido Materno</th>
-                                            <th>DNI</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="tbody_ListaCuentas">
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Percy</td>
-                                            <td>Saravia</td>
-                                            <td>Sanchez</td>
-                                            <td>78745128</td>
-                                            <td>
+<main class="login-form mt-5">
+    <div class="container mt-5 ">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header">Administrar Cuentas</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="staticEmail2" class="sr-only">Nombre</label>
+                                <input type="text" class="form-control" id="NombreUsuario" placeholder="Nombre"
+                                    value="">
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="inputPassword2" class="sr-only">DNI</label>
+                                <input type="text" class="form-control" id="DniUusario" placeholder="DNI">
+                            </div>
+                            <div class="col-sm-4">
+                                <button class="btn btn-primary mb-2" onclick="BuscarUsuario()"><i
+                                        class="fas fa-search"></i>Buscar</button>
+                                <button class="btn btn-success mb-2" onclick="llenarTablaAdmin()"><i
+                                        class="fas fa-search"></i>Últimos</button>
+                            </div>
+                        </div>
+
+                        <table id="tabla_ListaReservas" class="table table-fixed">
+                            <thead style="background-color: #dfe2e8;">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido Paterno</th>
+                                    <th>Apellido Materno</th>
+                                    <th>DNI</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody_ListaCuentas">
+
+                                <!-- <td>
                                                 <a class="btn-outline-warning" href="/modificable"><i class="far fa-edit"></i></a>
                                                 <button class="btn-outline-danger"><i class="far fa-trash-alt"></i>
                                                 </button>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <br>
-                                </div>
-                            </div>
-                            <br>
-                        </div>
+                                            </td> -->
+
+                            </tbody>
+                        </table>
+                        <br>
+
+
+                        <br>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
-    </main>
+    </div>
+    </div>
+</main>
 {% endblock %}

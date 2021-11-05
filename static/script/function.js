@@ -68,5 +68,114 @@ function buscarPasajero() {
                 $("#NombrePasajero").val(e.Nombre + ' ' + e.Paterno + ' ' + e.Materno);
             });
         }
-    }); 
+    });
+}
+
+function llenarTablaAdmin() {
+    console.log('Llenar tabla');
+    $("#tbody_ListaCuentas").empty();
+    $.ajax({
+        url: '/ListarUsuarios',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            $.each(data, function (i, e) {
+                if(e.id_estado == 0){
+                    var visible = ''
+                } else {
+                    var visible = 'none'
+                }
+                $("#tbody_ListaCuentas").append('<tr>' +
+                    '<td>' + e.id_usuario + '</td>' +
+                    '<td>' + e.nombre + '</td>' +
+                    '<td>' + e.apellido_paterno + '</td>' +
+                    '<td>' + e.apellido_materno + '</td>' +
+                    '<td>' + e.dni + '</td>' +
+                    '<td>' + e.estado + '</td>' +
+                    '<td style="display:'+visible+'"><button class="btn-outline-warning" onclick=EnviarDatosEditar(' + e.id_usuario + ');><i class="far fa-edit"></i></button>' +
+                    '  <button class="btn-outline-danger" onclick=EliminarUsuarioPorId(' + e.id_usuario + ');><i class="far fa-trash-alt"></i></button></td>' +
+                    '</tr>')
+            });
+        }
+    });
+}
+
+function BuscarUsuario() {
+    $("#tbody_ListaCuentas").empty();
+    var nombre = $("#NombreUsuario").val();
+    var dni = $("#DniUusario").val();
+
+    if (dni.length != 0 && nombre.length != 0) {
+        $.ajax({
+            url: '/ListarUsuarioPorNombreDni?nombre=' + nombre + '&dni=' + dni + '&opt=' + 1,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (i, e) {
+                    $("#tbody_ListaCuentas").append('<tr>' +
+                        '<td>' + e.id_usuario + '</td>' +
+                        '<td>' + e.nombre + '</td>' +
+                        '<td>' + e.apellido_paterno + '</td>' +
+                        '<td>' + e.apellido_materno + '</td>' +
+                        '<td>' + e.dni + '</td>' +
+                        '<td>' + e.estado + '</td>' +
+                        '<td><button class="btn-outline-warning" onclick=EnviarDatosEditar(' + e.id_usuario + ');><i class="far fa-edit"></i></button>' +
+                        '  <button class="btn-outline-danger" onclick=EliminarUsuarioPorId(' + e.id_usuario + ');><i class="far fa-trash-alt"></i></button></td>' +
+                        '</tr>')
+                });
+            }
+        });
+    } else if (dni.length == 0 && nombre.length != 0) {
+        $.ajax({
+            url: '/ListarUsuarioPorNombreDni?nombre=' + nombre + '&dni=' + dni + '&opt=' + 2,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (i, e) {
+                    $("#tbody_ListaCuentas").append('<tr>' +
+                        '<td>' + e.id_usuario + '</td>' +
+                        '<td>' + e.nombre + '</td>' +
+                        '<td>' + e.apellido_paterno + '</td>' +
+                        '<td>' + e.apellido_materno + '</td>' +
+                        '<td>' + e.dni + '</td>' +
+                        '<td>' + e.estado + '</td>' +
+                        '<td><button class="btn-outline-warning" onclick=EnviarDatosEditar(' + e.id_usuario + ');><i class="far fa-edit"></i></button>' +
+                        '  <button class="btn-outline-danger" onclick=EliminarUsuarioPorId(' + e.id_usuario + ');><i class="far fa-trash-alt"></i></button></td>' +
+                        '</tr>')
+                });
+            }
+        });
+    } else if (dni.length != 0 && nombre.length == 0) {
+        $.ajax({
+            url: '/ListarUsuarioPorNombreDni?nombre=' + nombre + '&dni=' + dni + '&opt=' + 1,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (i, e) {
+                    $("#tbody_ListaCuentas").append('<tr>' +
+                        '<td>' + e.id_usuario + '</td>' +
+                        '<td>' + e.nombre + '</td>' +
+                        '<td>' + e.apellido_paterno + '</td>' +
+                        '<td>' + e.apellido_materno + '</td>' +
+                        '<td>' + e.dni + '</td>' +
+                        '<td>' + e.estado + '</td>' +
+                        '<td><button class="btn-outline-warning" onclick=EnviarDatosEditar(' + e.id_usuario + ');><i class="far fa-edit"></i></button>' +
+                        '  <button class="btn-outline-danger" onclick=EliminarUsuarioPorId(' + e.id_usuario + ');><i class="far fa-trash-alt"></i></button></td>' +
+                        '</tr>')
+                });
+            }
+        });
+    }
+}
+
+function EliminarUsuarioPorId(id_usuario){
+    console.log('EliminarUsuarioPorId');
+    $.ajax({
+        url: '/EliminarUsuarioPorId?id_usuario=' + id_usuario,
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            llenarTablaAdmin();
+        }
+    });
 }

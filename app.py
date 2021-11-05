@@ -419,6 +419,64 @@ def guardarHistorialPasajero():
 
     return IdPasajero
 
+@app.route('/ListarUsuarios', methods=['GET'])
+def ListarUsuarios():
+    data = []
+    try:
+        ses = session['user']['id_usuario']
+        print(ses)
+        cursor = Connection().conexion().cursor()
+        cursor.execute('ListarUsuarios ?', ses)
+        #usuario = cursor.fetchall()
+
+        columns = [column[0] for column in cursor.description]
+        result = []
+        for row in cursor.fetchall():
+            result.append(dict(zip(columns, row)))
+        cursor.close()
+    except Exception as e:
+        data['mensaje'] = 'Error'
+        # jsonify convierte un arreglo a json
+    return jsonify(result)
+
+@app.route('/ListarUsuarioPorNombreDni', methods=['GET'])
+def ListarUsuarioPorNombreDni():
+    data = []
+    try:
+        ses = session['user']['id_usuario']
+        nombre = request.args.get('nombre')
+        dni = request.args.get('dni')
+        opt = request.args.get('opt')
+        cursor = Connection().conexion().cursor()
+        cursor.execute('ListarUsuarioPorNombreDni ?,?,?,?',(nombre, dni,opt,ses))
+        #usuario = cursor.fetchall()
+
+        columns = [column[0] for column in cursor.description]
+        result = []
+        for row in cursor.fetchall():
+            result.append(dict(zip(columns, row)))
+        cursor.close()
+        print(data)
+    except Exception as e:
+        data['mensaje'] = 'Error'
+        # jsonify convierte un arreglo a json
+    return jsonify(result)
+
+@app.route('/EliminarUsuarioPorId', methods=['GET'])
+def EliminarUsuarioPorId():
+    data = []
+    try:
+        id_usuario = request.args.get('id_usuario')
+        print("raaaaa"+id_usuario)
+        cursor = Connection().conexion().cursor()
+        cursor.execute('EliminarUsuarioPorId ?',(id_usuario))
+        cursor.commit()
+        cursor.close()
+    except Exception as e:
+        data['mensaje'] = 'Error'
+        # jsonify convierte un arreglo a json
+    return jsonify(data)
+
 
 # para verificar si el archivo es la principal
 if __name__ == '__main__':

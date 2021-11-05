@@ -4,7 +4,7 @@ from db.config import Connection
 class Destino:
 
     def listDepartamentos(self):
-        sql = "SELECT * FROM departamento"
+        sql = "Exec ListarDepartamentos"
         try:
             #abrir conexion
             con = Connection().conexion()
