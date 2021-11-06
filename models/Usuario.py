@@ -48,3 +48,56 @@ class Usuario:
         except Exception as e:
             result = e
         return result
+
+    def horarioCliente(self, id):
+        sql = "Exec ListarCronogramaUsuario ?"
+        try:
+            # abrir conexion
+            con = Connection().conexion()
+            cursor = con.cursor()
+            cursor.execute(sql, id)
+            return cursor
+            cursor.close()
+        except Exception as e:
+            result = "ID incorrecto"
+        return result
+    
+    def horarioChofer(self, id):
+        sql = "Exec ListarCronogramaChofer ?"
+        try:
+            # abrir conexion
+            con = Connection().conexion()
+            cursor = con.cursor()
+            cursor.execute(sql, id)
+            return cursor
+            cursor.close()
+        except Exception as e:
+            result = "ID incorrecto"
+        return result
+
+    def reseñar(self, id):
+        #optener datos de reseña
+        sql = "Exec  ?"
+        try:
+            # abrir conexion
+            con = Connection().conexion()
+            cursor = con.cursor()
+            result = cursor.execute(sql, id).fetchone()
+            cursor.close()
+        except Exception as e:
+            result = "ID incorrecto"
+        return result
+
+    def subirReseña(self, id):
+        #Actualizar datos de reseña
+        sql = "Exec  ?"
+        #UPDATE
+        try:
+            # abrir conexion
+            con = Connection().conexion()
+            cursor = con.cursor()
+            result = cursor.execute(sql, id).fetchone()
+            cursor.close()
+        except Exception as e:
+            result = "ID incorrecto"
+        return result

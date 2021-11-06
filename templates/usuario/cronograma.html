@@ -23,47 +23,45 @@
                             {% from "/usuario/_formhelpers.html" import render_field %}
                             <form action="/register" method="POST">
                                 <div class="form-row">
-
-                                </div>
-                                <div class="form-row">
                                     <table class="table table-striped text-center">
                                         <thead>
                                         <tr class="table-warning">
                                             <th scope="col">ID</th>
                                             <th scope="col">Fecha de viaje</th>
                                             <th scope="col">Destino</th>
+
+                                            {% if session["user"].rol == 1 %}
                                             <th scope="col">Asientos</th>
-                                            <th scope="col">USUARIO</th>
-                                            <th scope="col">CHOFER</th>
+                                            {% endif %}
+                                            <th scope="col">Acciones</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <div class=="row justify-content-center
-                                        ">
+                                        <div class="row justify-content-center">
+                                        
+                                        {% for crono in cronos %}
+
                                         <tr>
-                                            <th scope="row">1</th>
-                                            <td>10/11/21</td>
-                                            <td>Arequipa</td>
-                                            <td>5</td>
-                                            <td><a class="btn btn-primary" href="/realizarResenia">Reseña</a></td>
-                                            <td><a class="btn btn-primary" href="/asistencia">Tomar asistencia</a></td>
+                                            <th scope="row">{{ crono.id_venta }}</th>
+                                            <td>{{ crono.fecha_viaje }}</td>
+                                            <td>{{ crono.titulo }}</td>
+                                            
+                                            {% if session["user"].rol == 1 %}
+                                            <td>{{ crono.asientos }}</td>
+                                            {% endif %}
+                                            <td>
+                                                {% if crono.rol == 1 %}
+                                                    <a class="btn btn-primary" href="/realizarResenia/{{ crono.id_venta }}">Reseña</a>
+                                                {% endif %}
+                                                {% if crono.rol == 2 %}
+                                                    <a class="btn btn-primary" href="/asistencia/{{ crono.id_venta }}">Tomar asistencia</a>
+                                                {% endif %}
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>08/11/21</td>
-                                            <td>Cuzco</td>
-                                            <td>2</td>
-                                            <td><a class="btn btn-primary" href="/realizarResenia">Reseña</a></td>
-                                            <td><a class="btn btn-primary" href="/asistencia">Tomar asistencia</a></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>25/10/21</td>
-                                            <td>Ica</td>
-                                            <td>3</td>
-                                            <td><a class="btn btn-primary" href="/realizarResenia">Reseña</a></td>
-                                            <td><a class="btn btn-primary" href="/asistencia">Tomar asistencia</a></td>
-                                        </tr>
+
+                                        {% endfor %}
+
+                                        </div>
                                         </tbody>
                                     </table>
                                 </div>

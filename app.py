@@ -52,7 +52,8 @@ def entrar():
                 'id_usuario': login.id_usuario,
                 'nombre': login.nombre,
                 'apellido_paterno': login.apellido_paterno,
-                'saldo': login.saldo
+                'saldo': login.saldo,
+                'rol': login.rol
             }
             if login.rol == 0:
                 session['rol'] = login.rol
@@ -373,7 +374,8 @@ def viajes():
 @app.route("/cronograma", methods=['GET', 'POST'])
 def cronograma():
 
-    if request.method == 'POST' or request.method == 'GET' :
+
+    if request.method == 'POST' :
 
         saldo = float(session['user']['saldo'])
         total = float(request.form['total'])
@@ -394,6 +396,21 @@ def cronograma():
         else:
             flash('Saldo insuficiente', "danger")
             return redirect(url_for('listaReservas'))
+
+    if request.method == 'GET' :
+
+        if session['user']['rol'] == 1:
+             cronograma = Usuario().horarioCliente(session['user']['id_usuario'])
+
+        if session['user']['rol'] == 2:
+             cronograma = Usuario().horarioChofer(session['user']['id_usuario'])
+            
+        columns = [column[0] for column in cronograma.description]
+        data = []
+        for row in cronograma.fetchall():
+            data.append(dict(zip(columns, row)))
+        print(data)
+        return render_template('usuario/cronograma.html', cronos=data)
 
     return render_template('usuario/cronograma.html')
 
