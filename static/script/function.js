@@ -1,14 +1,53 @@
-$(document).ready(function (){
+$(document).ready(function () {
     $('.destino').click(function () {
         console.log('hola mundo')
     })
+
+    var cont = 0;
+
+    let precio = $("#precio").text();
+    precio_base = precio
+
+    $(document).on("change", "#seleccionado", function () {
+        if ($(this).prop('checked') == true) {
+            cont++;
+            console.log(cont);
+            if (cont == 1) {
+                precio = parseInt(precio);
+            } else {
+                precio = parseInt(precio) + parseInt(precio_base);
+            }
+            $("#precio").html(precio)
+        } else {
+            cont--;
+            console.log(cont);
+            if (cont <= 0) {
+                precio = parseInt(precio);
+            } else {
+                precio = parseInt(precio) - parseInt(precio_base);
+            }
+            $("#precio").html(precio)
+        }
+
+        if (cont == 0) {
+            $("#asientos_confirm").prop('disabled', true);
+        } else {
+            $("#asientos_confirm").prop('disabled', false);
+        }
+    })
+    if (cont == 0) {
+        $("#asientos_confirm").prop('disabled', true);
+    }
 });
 
 function saltar(e, id) {
     (e.keyCode) ? k = e.keyCode : k = e.which;
-    if (k == 13) { document.getElementById(id).focus(); }
+    if (k == 13) {
+        document.getElementById(id).focus();
+    }
 }
-$('body').scrollspy({ target: '#navbar-example' })
+
+$('body').scrollspy({target: '#navbar-example'})
 
 function saltarselect(e) {
     $(".miClase").keypress(function (e) {
@@ -34,12 +73,16 @@ function soloLetras(e) {
         }
     }
 
-    if (letras.indexOf(tecla) == -1 && !tecla_especial) { return false; }
+    if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+        return false;
+    }
 }
 
 function soloNumeros(e) {
     var key = window.event ? e.which : e.keyCode;
-    if (key < 48 || key > 57) { e.preventDefault(); }
+    if (key < 48 || key > 57) {
+        e.preventDefault();
+    }
 }
 
 function seleccionar(id) {
@@ -48,7 +91,9 @@ function seleccionar(id) {
     document.getElementById(id).setSelectionRange(0, can);
 }
 
-function Nuevo() { location.reload(); }
+function Nuevo() {
+    location.reload();
+}
 
 function abrirPantalla() {
     var idusu = getParameterByName('idusu')
@@ -72,7 +117,6 @@ function buscarPasajero() {
 }
 
 function llenarTablaAdmin() {
-    console.log('Llenar tabla');
     $("#tbody_ListaCuentas").empty();
     $.ajax({
         url: '/ListarUsuarios',
@@ -80,7 +124,7 @@ function llenarTablaAdmin() {
         success: function (data) {
             console.log(data);
             $.each(data, function (i, e) {
-                if(e.id_estado == 0){
+                if (e.id_estado == 0) {
                     var visible = ''
                 } else {
                     var visible = 'none'
@@ -92,10 +136,13 @@ function llenarTablaAdmin() {
                     '<td>' + e.apellido_materno + '</td>' +
                     '<td>' + e.dni + '</td>' +
                     '<td>' + e.estado + '</td>' +
-                    '<td style="display:'+visible+'"><button class="btn-outline-warning" onclick=EnviarDatosEditar(' + e.id_usuario + ');><i class="far fa-edit"></i></button>' +
+                    '<td style="display:' + visible + '"><button class="btn-outline-warning" onclick=EnviarDatosEditar(' + e.id_usuario + ');><i class="far fa-edit"></i></button>' +
                     '  <button class="btn-outline-danger" onclick=EliminarUsuarioPorId(' + e.id_usuario + ');><i class="far fa-trash-alt"></i></button></td>' +
                     '</tr>')
             });
+            //location.href ="http://127.0.0.1:3000/administrar"
+
+
         }
     });
 }
@@ -168,7 +215,7 @@ function BuscarUsuario() {
     }
 }
 
-function EliminarUsuarioPorId(id_usuario){
+function EliminarUsuarioPorId(id_usuario) {
     console.log('EliminarUsuarioPorId');
     $.ajax({
         url: '/EliminarUsuarioPorId?id_usuario=' + id_usuario,

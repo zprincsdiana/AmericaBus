@@ -5,6 +5,18 @@
         <div class="container mt-5 ">
             <div class="row justify-content-center">
                 <div class="col-md-8">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    <strong>{{ message }}!</strong>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                     <div class="card">
                         <div class="card-header text-center"><h4>Selección de asientos</h4></div>
                         <div class="card-body">
@@ -12,11 +24,10 @@
                                 <div class="row">
                                     <div class="col-sm">
                                         <p class="text-center">Ver Precio:</p>
-                                        <p class="text-center">S/. 0.00</p>
-
+                                        <p class="text-center">S/. <span
+                                                id="precio">{{ session['detalle_venta'].precio }}</span></p>
                                     </div>
                                 </div>
-
                                 <div class="row text-center">
                                     <div class="col-sm-3">
                                         <label for="">Fila 1</label>
@@ -36,17 +47,20 @@
                                 <div class="row text-center">
                                     {% for asiento in data %}
                                         <div class="col-sm-3">
-                                        <span id="" name="" class="btn btn-success"
+                                        <span name="" {% if asiento.estado == 1 %} class="btn btn-danger"
+                                        {% else %}
+                                              class="btn btn-success"
+                                        {% endif %}
                                               type="button">{{ asiento.numero_asiento }}</span>
                                             <br>
-                                            <input type="checkbox" value="{{ asiento.id_asiento }}" id=""
-                                                   name="check"/>
+                                            <input type="checkbox" value="{{ asiento.id_asiento }}" id="seleccionado"
+                                                   name="check" {% if asiento.estado == 1 %} disabled {% endif %}/>
                                         </div>
                                     {% endfor %}
                                 </div>
                                 <br>
                                 <div class="text-center">
-                                    <button type="submit" id=""
+                                    <button type="submit" id="asientos_confirm"
                                             class="btn btn-info text-white">
                                         <i class="fas fa-chair"></i> Confirmar Asientos
                                     </button>

@@ -8,49 +8,54 @@
                         <div class="card-header">Realizar Reseña</div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12">
-                                    <label for=""><strong>Puntaje</strong></label>
-                                    <br>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                               id="puntaje1"
-                                               value="option1">
-                                        <label class="form-check-label" for="puntaje1">Muy Malo</label>
+                                <form action="/confirmarResenia" method="post">
+                                    <div class="col-sm-12">
+                                        <label for=""><strong>Puntaje</strong></label>
+                                        <br>
+                                        <input type="hidden" name="id_venta" value="{{ data }}">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="puntaje"
+                                                   id="puntaje1"
+                                                   value="1">
+                                            <label class="form-check-label" for="puntaje1">Muy Malo</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="puntaje"
+                                                   id="puntaje2"
+                                                   value="2">
+                                            <label class="form-check-label" for="puntaje2">Malo</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="puntaje"
+                                                   id="puntaje3"
+                                                   value="3">
+                                            <label class="form-check-label" for="puntaje3">Regular</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="puntaje"
+                                                   id="puntaje4"
+                                                   value="4">
+                                            <label class="form-check-label" for="puntaje4">Bueno</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="puntaje"
+                                                   id="puntaje5"
+                                                   value="5">
+                                            <label class="form-check-label" for="puntaje5">Fantastico</label>
+                                        </div>
+                                        <br><br>
+                                        <label for=""><strong>Reseña</strong></label>
+                                        <textarea class="form-control" name="txtReseña" id="Resenia" cols="30"
+                                                  rows="8"></textarea><br>
+                                        <button id="btn_guardarResenia"
+                                           class="btn btn-success btn-sm" type="submit"
+                                           value="btn_guardarResenia"><i class="fas fa-save"></i>
+                                            Guardar Reseña
+                                        </button>
+                                        <a href="/cronograma" class="btn btn-info btn-sm"><i
+                                                class="fas fa-undo-alt"></i>Regresar</a>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                               id="puntaje2"
-                                               value="option2">
-                                        <label class="form-check-label" for="puntaje2">Malo</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                               id="puntaje3"
-                                               value="option3">
-                                        <label class="form-check-label" for="puntaje3">Regular</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                               id="puntaje4"
-                                               value="option4">
-                                        <label class="form-check-label" for="puntaje4">Bueno</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                               id="puntaje5"
-                                               value="option5">
-                                        <label class="form-check-label" for="puntaje5">Fantastico</label>
-                                    </div>
-                                    <br><br>
-                                    <label for=""><strong>Reseña</strong></label>
-                                    <textarea class="form-control" name="txt_Resenia" id="Resenia" cols="30"
-                                              rows="8"></textarea><br>
-                                    <a id="btn_guardarResenia" href="/cronograma" class="btn btn-success btn-sm" type="button"
-                                            value="btn_guardarResenia"><i class="fas fa-save"></i>
-                                        Guardar Reseña
-                                    </a>
-                                    <a href="/cronograma" class="btn btn-info btn-sm"><i class="fas fa-undo-alt"></i>Regresar</a>
-                                </div>
+                                </form>
                             </div>
                             <br>
                         </div>

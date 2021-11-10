@@ -29,12 +29,12 @@
                                             <input class="form-check-input" type="radio" name="id_bus"
                                                    id="flexRadioDefault1" value="{{ data[0].id_bus }},{{ data[0].precio }}">
                                             <label class="form-check-label" for="flexRadioDefault1">
-                                                Normal - {{ data[1].precio }}
+                                                Normal - {{ data[0].precio }}
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="id_bus"
-                                                   id="flexRadioDefault2" value="{{ data[1].id_bus }},{{ data[0].precio }}" checked>
+                                                   id="flexRadioDefault2" value="{{ data[1].id_bus }},{{ data[0].precio+30 }}" checked>
                                             <label class="form-check-label" for="flexRadioDefault2">
                                                 VIP - {{ data[1].precio+30 }}
                                             </label>

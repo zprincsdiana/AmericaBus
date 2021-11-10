@@ -45,7 +45,6 @@ def entrar():
         contraseña = request.form['contraseña']
 
         login = Login().comprobarLogin(correo, contraseña)
-        print(login)
         # comprobar si es de tipo lista
         if isinstance(login, pyodbc.Row):
             session['user'] = {
@@ -106,6 +105,7 @@ def register():
         try:
             login = Login().crearUsuario(nombre, apellidoP, apellidoM, telefono, departamento,
                                          fechaN, direccion, correo, contraseña, dni)
+            print(login)
             # enviar mensaje flash
             if isinstance(login, bool):
                 flash('Usuario registrado correctamente', "success")
@@ -174,7 +174,7 @@ def usuariosList():
         # var = [list(row) for row in usuario]
         # data = var
         cursor.close()
-        print(data)
+        
     except Exception as e:
         data['mensaje'] = 'Error'
         # jsonify convierte un arreglo a json
@@ -187,11 +187,9 @@ def asientos():
         id_destino = request.form['id_destino']
         id_bus = request.form['id_bus'].split(sep=',')
         id_usuario = request.form['id_usuario']
-
         try:
             # retorna el id de la venta creada
             id_venta = Venta().crearVenta(id_usuario, id_bus[0], id_destino)
-            print(id_venta[0])
             session['detalle_venta'] = {
                 'id_venta': id_venta[0],
                 'precio': id_bus[1],
@@ -201,12 +199,12 @@ def asientos():
                 'asientos': [0, 0, 0]
             }
             asiento = AsientoBus().listarAsientos(id_bus[0])
-            print(asiento)
+            
             columns = [column[0] for column in asiento.description]
             data = []
             for row in asiento.fetchall():
                 data.append(dict(zip(columns, row)))
-            print(data)
+            
         except Exception as e:
             print(e)
     return render_template('asistencia/asientos.html', data=data)
@@ -216,12 +214,20 @@ def asientos():
 def listaReservas():
     if request.method == 'POST':
         asientos = (request.form.getlist('check'))
+
         # pasar los id a int
         ids_asientos = [int(row) for row in request.form.getlist('check')]
-        # convertir de una arreglo a tupla
-        ids_asientitos = str(tuple(ids_asientos))
-        asientos_select = AsientoBus().asientosSeleccionados(ids_asientitos)
+        if len(ids_asientos) == 1:
+            ids_asientos = str(ids_asientos).replace('[', '(')
+            ids_asientos = str(ids_asientos).replace(']', ')')
+            ids_asientitos = ids_asientos
+            
+        else:
+            # convertir de una arreglo a tupla
+            ids_asientitos = str(tuple(ids_asientos))
+            
 
+        asientos_select = AsientoBus().asientosSeleccionados(ids_asientitos)
         asientoss = []
         # convertir en un solo arreglo los numeros de asientos
         for row in asientos_select:
@@ -241,14 +247,13 @@ def listaReservas():
                                                          session['detalle_venta']['estado'],
                                                          session['detalle_venta']['asientos'])
 
-        print(asientos_select)
 
     reservas = Venta().listReservas(session['user']['id_usuario'])
     columns = [column[0] for column in reservas.description]
     data = []
     for row in reservas.fetchall():
         data.append(dict(zip(columns, row)))
-    print(data)
+    
     return render_template('reserva/listaReservas.html', data=data)
 
 
@@ -259,7 +264,7 @@ def destinos():
     data = []
     for row in destino.fetchall():
         data.append(dict(zip(columns, row)))
-    print(data)
+    
     return render_template('destinos/destinos.html', data=data)
 
 
@@ -299,16 +304,36 @@ def generarReserva(id):
     data = []
     for row in bus.fetchall():
         data.append(dict(zip(columns, row)))
-    print(data)
+    
     if 'user' in session:
         return render_template('reserva/generarReserva.html', data=data)
     else:
         return redirect(url_for('login'))
 
 
-@app.route("/realizarResenia")
-def realizarResenia():
-    return render_template('usuario/realizarResenia.html')
+@app.route("/realizarResenia/<id>", methods=['GET'])
+def realizarResenia(id):
+    print(id)
+    return render_template('usuario/realizarResenia.html', data = id)
+
+@app.route("/confirmarResenia", methods=['POST'])
+def confirmarResenia():
+    idVenta = request.form['id_venta']
+    puntaje = request.form['puntaje']
+    reseña = request.form['txtReseña']
+
+    try:
+        reseñar = Usuario().reseñar(idVenta, puntaje, reseña)
+        print(reseñar)
+        # enviar mensaje flash
+        if isinstance(reseñar, bool):
+            flash('Reseña Realizada correctamente', "success")
+            return redirect(url_for("cronograma"))
+        else:
+            flash('Error al realizar la reseña', "danger")
+    except Exception as e:
+        flash('Error al realizar la reseña '+e, "danger")
+    return redirect(url_for("cronograma"))
 
 
 @app.route('/buscarPasajeroPorId')
@@ -373,46 +398,38 @@ def viajes():
 # Mi cronograma
 @app.route("/cronograma", methods=['GET', 'POST'])
 def cronograma():
-
-
-    if request.method == 'POST' :
+    if request.method == 'POST':
 
         saldo = float(session['user']['saldo'])
         total = float(request.form['total'])
 
-        print(saldo)
-        print(total)
 
         if total <= saldo:
-            #restamos el total a pagar al saldo actual
+            # restamos el total a pagar al saldo actual
             session['user']['saldo'] = saldo - total
             # llamamos al la funcion para que Actualice el registro
-            Usuario().actualizarSaldo(session['user']['saldo'],session['user']['id_usuario'])
+            Usuario().actualizarSaldo(session['user']['saldo'], session['user']['id_usuario'])
             # ejecuto la transaccion de pago
             pagado = Venta().pagarVenta(session['user']['id_usuario'])
-            print(pagado)
             if pagado:
                 flash('Viaje pagado', "success")
         else:
             flash('Saldo insuficiente', "danger")
             return redirect(url_for('listaReservas'))
 
-    if request.method == 'GET' :
+    if session['user']['rol'] == 1:
+        cronograma = Usuario().horarioCliente(session['user']['id_usuario'])
 
-        if session['user']['rol'] == 1:
-             cronograma = Usuario().horarioCliente(session['user']['id_usuario'])
+    if session['user']['rol'] == 2:
+        cronograma = Usuario().horarioChofer(session['user']['id_usuario'])
 
-        if session['user']['rol'] == 2:
-             cronograma = Usuario().horarioChofer(session['user']['id_usuario'])
-            
-        columns = [column[0] for column in cronograma.description]
-        data = []
-        for row in cronograma.fetchall():
-            data.append(dict(zip(columns, row)))
-        print(data)
-        return render_template('usuario/cronograma.html', cronos=data)
+    columns = [column[0] for column in cronograma.description]
+    data = []
+    for row in cronograma.fetchall():
+        data.append(dict(zip(columns, row)))
+    
 
-    return render_template('usuario/cronograma.html')
+    return render_template('usuario/cronograma.html', cronos=data)
 
 
 ############################
@@ -436,15 +453,15 @@ def guardarHistorialPasajero():
 
     return IdPasajero
 
+
 @app.route('/ListarUsuarios', methods=['GET'])
 def ListarUsuarios():
     data = []
     try:
         ses = session['user']['id_usuario']
-        print(ses)
         cursor = Connection().conexion().cursor()
         cursor.execute('ListarUsuarios ?', ses)
-        #usuario = cursor.fetchall()
+        # usuario = cursor.fetchall()
 
         columns = [column[0] for column in cursor.description]
         result = []
@@ -455,6 +472,7 @@ def ListarUsuarios():
         data['mensaje'] = 'Error'
         # jsonify convierte un arreglo a json
     return jsonify(result)
+
 
 @app.route('/ListarUsuarioPorNombreDni', methods=['GET'])
 def ListarUsuarioPorNombreDni():
@@ -465,28 +483,28 @@ def ListarUsuarioPorNombreDni():
         dni = request.args.get('dni')
         opt = request.args.get('opt')
         cursor = Connection().conexion().cursor()
-        cursor.execute('ListarUsuarioPorNombreDni ?,?,?,?',(nombre, dni,opt,ses))
-        #usuario = cursor.fetchall()
+        cursor.execute('ListarUsuarioPorNombreDni ?,?,?,?', (nombre, dni, opt, ses))
+        # usuario = cursor.fetchall()
 
         columns = [column[0] for column in cursor.description]
         result = []
         for row in cursor.fetchall():
             result.append(dict(zip(columns, row)))
         cursor.close()
-        print(data)
+        
     except Exception as e:
         data['mensaje'] = 'Error'
         # jsonify convierte un arreglo a json
     return jsonify(result)
+
 
 @app.route('/EliminarUsuarioPorId', methods=['GET'])
 def EliminarUsuarioPorId():
     data = []
     try:
         id_usuario = request.args.get('id_usuario')
-        print("raaaaa"+id_usuario)
         cursor = Connection().conexion().cursor()
-        cursor.execute('EliminarUsuarioPorId ?',(id_usuario))
+        cursor.execute('EliminarUsuarioPorId ?', (id_usuario))
         cursor.commit()
         cursor.close()
     except Exception as e:
