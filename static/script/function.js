@@ -38,6 +38,20 @@ $(document).ready(function () {
     if (cont == 0) {
         $("#asientos_confirm").prop('disabled', true);
     }
+    $("#ModalDeposito").keyup(function () {
+        $("#ModalNuevoSaldo").val('');
+
+        var saldo = $("#ModalSaldo").val();
+        var deposito = $(this).val();
+
+        if (deposito == '') {
+            $("#ModalNuevoSaldo").val(saldo);
+        } else {
+            var NuevoSaldo = parseFloat(saldo) + parseFloat(deposito);
+            var floatSaldo = parseFloat(NuevoSaldo);
+            $("#ModalNuevoSaldo").val(floatSaldo);
+        }
+    })
 });
 
 function saltar(e, id) {
@@ -136,7 +150,7 @@ function llenarTablaAdmin() {
                     '<td>' + e.apellido_materno + '</td>' +
                     '<td>' + e.dni + '</td>' +
                     '<td>' + e.estado + '</td>' +
-                    '<td style="display:' + visible + '"><button class="btn-outline-warning" onclick=EnviarDatosEditar(' + e.id_usuario + ');><i class="far fa-edit"></i></button>' +
+                    '<td style="display:' + visible + '"><button class="btn-outline-warning" onclick=ListarDepartamentos();EnviarDatosEditar(' + e.id_usuario + '); data-toggle="modal" data-target="#ModalEditar"><i class="far fa-edit"></i></button>' +
                     '  <button class="btn-outline-danger" onclick=EliminarUsuarioPorId(' + e.id_usuario + ');><i class="far fa-trash-alt"></i></button></td>' +
                     '</tr>')
             });
@@ -166,7 +180,7 @@ function BuscarUsuario() {
                         '<td>' + e.apellido_materno + '</td>' +
                         '<td>' + e.dni + '</td>' +
                         '<td>' + e.estado + '</td>' +
-                        '<td><button class="btn-outline-warning" onclick=EnviarDatosEditar(' + e.id_usuario + ');><i class="far fa-edit"></i></button>' +
+                        '<td><button class="btn-outline-warning" onclick=ListarDepartamentos();EnviarDatosEditar(' + e.id_usuario + '); data-toggle="modal" data-target="#ModalEditar"><i class="far fa-edit"></i></button>' +
                         '  <button class="btn-outline-danger" onclick=EliminarUsuarioPorId(' + e.id_usuario + ');><i class="far fa-trash-alt"></i></button></td>' +
                         '</tr>')
                 });
@@ -186,7 +200,7 @@ function BuscarUsuario() {
                         '<td>' + e.apellido_materno + '</td>' +
                         '<td>' + e.dni + '</td>' +
                         '<td>' + e.estado + '</td>' +
-                        '<td><button class="btn-outline-warning" onclick=EnviarDatosEditar(' + e.id_usuario + ');><i class="far fa-edit"></i></button>' +
+                        '<td><button class="btn-outline-warning" onclick=ListarDepartamentos();EnviarDatosEditar(' + e.id_usuario + '); data-toggle="modal" data-target="#ModalEditar"><i class="far fa-edit"></i></button>' +
                         '  <button class="btn-outline-danger" onclick=EliminarUsuarioPorId(' + e.id_usuario + ');><i class="far fa-trash-alt"></i></button></td>' +
                         '</tr>')
                 });
@@ -206,7 +220,7 @@ function BuscarUsuario() {
                         '<td>' + e.apellido_materno + '</td>' +
                         '<td>' + e.dni + '</td>' +
                         '<td>' + e.estado + '</td>' +
-                        '<td><button class="btn-outline-warning" onclick=EnviarDatosEditar(' + e.id_usuario + ');><i class="far fa-edit"></i></button>' +
+                        '<td><button class="btn-outline-warning" onclick=ListarDepartamentos();EnviarDatosEditar(' + e.id_usuario + '); data-toggle="modal" data-target="#ModalEditar"><i class="far fa-edit"></i></button>' +
                         '  <button class="btn-outline-danger" onclick=EliminarUsuarioPorId(' + e.id_usuario + ');><i class="far fa-trash-alt"></i></button></td>' +
                         '</tr>')
                 });
@@ -225,4 +239,82 @@ function EliminarUsuarioPorId(id_usuario) {
             llenarTablaAdmin();
         }
     });
+}
+
+// function abrirModalEditar(id_usuario) {
+//     setTimeout(EnviarDatosEditar(id_usuario), 1000);
+// }
+
+function EnviarDatosEditar(id_usuario) {
+    $("#IdUsuEdit").val(id_usuario)
+    LimpiarModalEditar();
+    $.ajax({
+        url: '/ListarUsuarioPorId?id_usuario=' + id_usuario,
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            $.each(data, function (i, e) {
+                $("#ModalNombre").val(e.nombre);
+                $("#ModalPaterno").val(e.apellido_paterno);
+                $("#ModalMaterno").val(e.apellido_materno);
+                $("#ModalDNI").val(e.dni);
+                $("#ModalFechaNacimiento").val(e.fecha_nacimiento);
+                $("#ModalTelefono").val(e.telefono);
+                $("#ModalDireccion").val(e.direccion);
+                $("#ModalDepartamento").val(e.id_departamento);
+                $("#ModalSaldo").val(e.saldo);
+                $("#ModalNuevoSaldo").val(e.saldo);
+            });
+        }
+    });
+}
+
+function ListarDepartamentos() {
+    $.ajax({
+        url: '/ListarDepartamentos?',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            $.each(data, function (i, e) {
+                $("#ModalDepartamento").append('<option value="' + e.id_departamento + '" >' + e.nombre + '</option>')
+            });
+        }
+    });
+}
+
+function EditarUsuario() {
+    var id_usuario = $("#IdUsuEdit").val();
+    var nombre = $("#ModalNombre").val();
+    var paterno = $("#ModalPaterno").val();
+    var materno = $("#ModalMaterno").val();
+    var dni = $("#ModalDNI").val();
+    var nacimiento = $("#ModalFechaNacimiento").val();
+    var telefono = $("#ModalTelefono").val();
+    var direccion = $("#ModalDireccion").val();
+    var departamento = $("#ModalDepartamento").val();
+    var nuevosaldo = $("#ModalNuevoSaldo").val();
+
+    $.ajax({
+        url: '/EditarUsuarioPorId?id_usuario=' + id_usuario + '&nombre=' + nombre + '&paterno=' + paterno + '&materno=' + materno + 
+        '&dni=' + dni + '&nacimiento=' + nacimiento + '&telefono=' + telefono + '&direccion=' + direccion + '&departamento=' + departamento +
+        '&nuevosaldo=' + nuevosaldo,
+        dataType: 'json',
+        success: function (data) {
+            EnviarDatosEditar(id_usuario);
+        }
+    });
+}
+
+function LimpiarModalEditar() {
+    $("#ModalNombre").val('');
+    $("#ModalPaterno").val('');
+    $("#ModalMaterno").val('');
+    $("#ModalDNI").val('');
+    $("#ModalFechaNacimiento").val('');
+    $("#ModalTelefono").val('');
+    $("#ModalDireccion").val('');
+    $("#ModalDepartamento").change();
+    $("#ModalSaldo").val('');
+    $("#ModalNuevoSaldo").val('');
+    $("#ModalDeposito").val('');
 }

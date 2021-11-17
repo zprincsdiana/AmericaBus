@@ -512,6 +512,68 @@ def EliminarUsuarioPorId():
         # jsonify convierte un arreglo a json
     return jsonify(data)
 
+@app.route('/ListarUsuarioPorId', methods=['GET'])
+def ListarUsuarioPorId():
+    data = []
+    try:
+        id_usuario = request.args.get('id_usuario')
+        cursor = Connection().conexion().cursor()
+        cursor.execute('ListarUsuarioPorId ?', id_usuario)
+        #usuario = cursor.fetchall()
+
+        columns = [column[0] for column in cursor.description]
+        result = []
+        for row in cursor.fetchall():
+            result.append(dict(zip(columns, row)))
+        cursor.close()
+    except Exception as e:
+        data['mensaje'] = 'Error'
+        # jsonify convierte un arreglo a json
+    return jsonify(result)
+
+@app.route('/ListarDepartamentos', methods=['GET'])
+def ListarDepartamentos():
+    data = []
+    try:
+        id_usuario = request.args.get('id_usuario')
+        cursor = Connection().conexion().cursor()
+        cursor.execute('ListarDepartamentos')
+        #usuario = cursor.fetchall()
+
+        columns = [column[0] for column in cursor.description]
+        result = []
+        for row in cursor.fetchall():
+            result.append(dict(zip(columns, row)))
+        cursor.close()
+    except Exception as e:
+        data['mensaje'] = 'Error'
+        # jsonify convierte un arreglo a json
+    return jsonify(result)
+
+@app.route('/EditarUsuarioPorId', methods=['GET'])
+def EditarUsuarioPorId():
+    data = []
+    try:
+        id_usuario = request.args.get('id_usuario')
+        nombre = request.args.get('nombre')
+        paterno = request.args.get('paterno')
+        materno = request.args.get('materno')
+        dni = request.args.get('dni')
+        nacimiento = request.args.get('nacimiento')
+        telefono = request.args.get('telefono')
+        direccion = request.args.get('direccion')
+        departamento = request.args.get('departamento')
+        nuevosaldo = request.args.get('nuevosaldo')
+
+        cursor = Connection().conexion().cursor()
+        cursor.execute('EditarUsuarioPorId ?,?,?,?,?,?,?,?,?,?',(id_usuario,nombre,paterno,materno,dni,nacimiento,telefono,direccion,departamento,nuevosaldo))
+        cursor.commit()
+        cursor.close()
+    except Exception as e:
+        data['mensaje'] = 'Error'
+        # jsonify convierte un arreglo a json
+    return jsonify(data)
+
 
 # para verificar si el archivo es la principal
 if __name__ == '__main__':
