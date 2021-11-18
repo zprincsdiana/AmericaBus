@@ -20,7 +20,7 @@ class Venta:
         return result
 
     def listReservas(self, id_usuario):
-        sql = "SELECT d.titulo, dv.importe, v.Registro, dv.asientos, (SELECT sum(dev.importe) from detalle_venta dev inner join venta ven on dev.id_venta = ven.id_venta where ven.id_usuario = ? ) as 'total_pagar' FROM detalle_venta dv INNER JOIN venta v ON dv.id_venta=v.id_venta INNER JOIN destino d ON d.id_destino=v.id_destino WHERE v.id_usuario = ? and v.Estado = 0 GROUP BY dv.importe,d.titulo,v.Registro, dv.asientos"
+        sql = "SELECT d.titulo, dv.importe, v.Registro, dv.asientos, (SELECT sum(dev.importe) from detalle_venta dev inner join venta ven on dev.id_venta = ven.id_venta where ven.id_usuario = ? and ven.Estado = 0) as 'total_pagar' FROM detalle_venta dv INNER JOIN venta v ON dv.id_venta=v.id_venta INNER JOIN destino d ON d.id_destino=v.id_destino WHERE v.id_usuario = ? and v.Estado = 0 GROUP BY dv.importe,d.titulo,v.Registro, dv.asientos"
         try:
             # abrir conexion
             con = Connection().conexion()

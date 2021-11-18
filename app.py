@@ -70,6 +70,8 @@ def logout():
         session.pop('user')
     if 'rol' in session:
         session.pop('rol')
+    if 'detalle_venta' in session:
+        session.pop('detalle_venta')
 
     return redirect(url_for('index'))
 
