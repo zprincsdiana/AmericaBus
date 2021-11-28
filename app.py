@@ -270,9 +270,35 @@ def destinos():
     return render_template('destinos/destinos.html', data=data)
 
 
-@app.route("/asistencia")
-def asistencia():
-    return render_template('asistencia/asistencia.html')
+@app.route("/asistencia/<id>", methods=['GET'])
+def asistencia(id):
+    if request.method == 'GET':
+        try:
+            asistenciaList = Usuario().tomarAsistencia(id)
+            columns = [column[0] for column in asistenciaList.description]
+            data = []
+            for row in asistenciaList.fetchall():
+                data.append(dict(zip(columns, row)))
+            print(data)
+        except Exception as e:
+            print(e)
+    return render_template('asistencia/asistencia.html', data=data)
+
+
+@app.route("/confirmarAsistencia", methods=['POST'])
+def confirmarAsistencia():
+    id_venta = [int(row) for row in request.form.getlist('id_venta')]
+    if len(id_venta) == 1:
+        id_venta = str(id_venta).replace('[', '(')
+        id_venta = str(id_venta).replace(']', ')')
+        id_ventas = id_venta
+
+    else:
+        # convertir de una arreglo a tupla
+        id_ventas = str(tuple(id_venta))
+
+    AsientoBus().confirmarAsistencia(id_ventas,session['user']['id_usuario'])
+    return redirect(url_for('index'))
 
 
 @app.route("/estadisticas")
@@ -287,11 +313,24 @@ def pago():
 
 @app.route("/detalle/<id>")
 def detalle(id):
+
+    data = {}
+    reseñas=[]
     destino = Destino().getDestino(id)
     columns = [column[0] for column in destino.description]
     for row in destino.fetchall():
-        data = (dict(zip(columns, row)))
-    return render_template('destinos/DestinosDetallados.html', data=data)
+        destinos = (dict(zip(columns, row)))
+
+    destino1 = Destino().getReseñas(id)
+    columns1 = [column[0] for column in destino1.description]
+    for row in destino1.fetchall():
+        reseñas.append(dict(zip(columns1, row)))
+
+    print(reseñas)
+    data.setdefault('destinos',destinos)
+    data.setdefault('reseñas',reseñas)
+    print(data)
+    return render_template('destinos/DestinosDetallados.html',data=data)
 
 
 @app.route("/administrar")

@@ -58,3 +58,18 @@ class Destino:
             result = e
 
         return result
+
+    def getReseñas(self,id):
+        sql = "select v.resenia,v.puntaje,concat(u.nombre,' ',u.apellido_paterno) as 'usuario' " \
+              "from venta v inner join usuario u on v.id_usuario = u.id_usuario where v.resenia is not null and id_destino = ?"
+        try:
+            # abrir conexion
+            con = Connection().conexion()
+            cursor = con.cursor()
+            cursor.execute(sql, id)
+            return cursor
+            cursor.close()
+        except Exception as e:
+            result = e
+
+        return result

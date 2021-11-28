@@ -15,7 +15,7 @@ class AsientoBus:
             result = e
         return result
 
-    def asientosSeleccionados(self, ids_asientos, ):
+    def asientosSeleccionados(self, ids_asientos):
         sql1 = f"UPDATE asientos SET estado = 1 where id_asiento in {ids_asientos}"
 
         try:
@@ -39,6 +39,22 @@ class AsientoBus:
             con = Connection().conexion()
             cursor = con.cursor()
             cursor.execute(sql, (id_venta,precio,cantidad_asientos,importe,estado,asientos))
+            cursor.commit()
+            cursor.close()
+            result = True
+        except Exception as e:
+            result = e
+        return result
+
+    def confirmarAsistencia(self, ids_venta, id_usuario):
+        sql1 = f"UPDATE venta SET asistencia = 1 where id_venta in {ids_venta}"
+        try:
+            # abrir conexion
+            con = Connection().conexion()
+            cursor = con.cursor()
+            cursor.execute(sql1)
+            cursor.commit()
+            cursor.execute("UPDATE bus SET termino_viaje = 1 where id_usuario = ?", id_usuario)
             cursor.commit()
             cursor.close()
             result = True

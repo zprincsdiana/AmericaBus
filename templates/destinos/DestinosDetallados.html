@@ -11,14 +11,14 @@
                                 <div class="col-sm-5">
                                     <div>
                                         <img class="img-fluid" alt="100%x280"
-                                             src="../../static/images/{{ data.imagen }}">
+                                             src="../../static/images/{{ data.destinos.imagen }}">
                                     </div>
                                 </div>
                                 <div class="col-sm-7">
                                     <div class="row">
                                         <div class="col-sm">
-                                            <h5>{{ data.nombre_destino }}</h5>
-                                            <p>{{ data.descripcion }}</p>
+                                            <h5>{{ data.destinos.nombre_destino }}</h5>
+                                            <p>{{ data.destinos.descripcion }}</p>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -27,15 +27,15 @@
                                             <div class="row">
                                                 <div class="col-sm text-center">
                                                     <span>Fecha de Viaje:</span><br>
-                                                    <span>{{ data.fecha_viaje }}</span>
+                                                    <span>{{ data.destinos.fecha_viaje }}</span>
                                                 </div>
                                                 <div class="col-sm text-center">
                                                     <span>Precio normal:</span><br>
-                                                    <span class="bg-success p-1 text-white">S/. {{ data.precio }}</span>
+                                                    <span class="bg-success p-1 text-white">S/. {{ data.destinos.precio }}</span>
                                                 </div>
                                                 <div class="col-sm text-center">
                                                     <span>Precio VIP:</span><br>
-                                                    <span class="bg-success p-1 text-white">S/. {{ data.precio+30 }}</span>
+                                                    <span class="bg-success p-1 text-white">S/. {{ data.destinos.precio+30 }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -43,7 +43,7 @@
                                     <div class="col-sm">
                                         <div class="text-right mt-5">
                                             <div>
-                                                <a href="/generarReserva/{{ data.id_destino }}" class="btn btn-info btn-sm"><i
+                                                <a href="/generarReserva/{{ data.destinos.id_destino }}" class="btn btn-info btn-sm"><i
                                                         class="fas fa-ticket-alt"></i>Comprar</a>
                                             </div>
                                         </div>
@@ -59,66 +59,28 @@
     <section class="container">
         <h3>Reseñas</h3>
         <div class="card-columns">
+            {% for rese in data.reseñas %}
             <div class="card p-3">
                 <blockquote class="blockquote mb-0 card-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <footer class="blockquote-footer">
-                        <small class="text-muted">
-                            Someone famous in <cite title="Source Title">Source Title</cite>
-                        </small>
-                    </footer>
-                </blockquote>
-            </div>
-            <div class="card p-3">
-                <blockquote class="blockquote mb-0 card-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <footer class="blockquote-footer">
-                        <small class="text-muted">
-                            Someone famous in <cite title="Source Title">Source Title</cite>
-                        </small>
-                    </footer>
-                </blockquote>
-            </div>
-            <div class="card p-3">
-                <blockquote class="blockquote mb-0 card-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <footer class="blockquote-footer">
-                        <small class="text-muted">
-                            Someone famous in <cite title="Source Title">Source Title</cite>
-                        </small>
-                    </footer>
-                </blockquote>
-            </div>
-            <div class="card p-3">
-                <blockquote class="blockquote mb-0 card-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <footer class="blockquote-footer">
-                        <small class="text-muted">
-                            Someone famous in <cite title="Source Title">Source Title</cite>
-                        </small>
-                    </footer>
-                </blockquote>
-            </div><div class="card p-3">
-                <blockquote class="blockquote mb-0 card-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <footer class="blockquote-footer">
-                        <small class="text-muted">
-                            Someone famous in <cite title="Source Title">Source Title</cite>
-                        </small>
-                    </footer>
-                </blockquote>
-            </div><div class="card p-3">
-                <blockquote class="blockquote mb-0 card-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <footer class="blockquote-footer">
-                        <small class="text-muted">
-                            Someone famous in <cite title="Source Title">Source Title</cite>
-                        </small>
-                    </footer>
-                </blockquote>
-            </div>
+                    <p>{{ rese.resenia }}</p>
+                    <small>Puntuación: </small>
+                    {% for star in range(rese.puntaje) %}
+                        <i class="fas fa-star"></i>
+                    {% endfor %}
+                    {% if rese.puntaje != 5%}
+                        {% for x in range(5 - rese.puntaje) %}
+                            <i class="far fa-star"></i>
+                        {% endfor %}
+                    {% endif %}
 
-
+                    <footer class="blockquote-footer">
+                        <small class="text-muted">
+                            Escrito por <cite title="Source Title">{{ rese.usuario }}</cite>
+                        </small>
+                    </footer>
+                </blockquote>
+            </div>
+            {% endfor %}
         </div>
     </section>
 {% endblock %}

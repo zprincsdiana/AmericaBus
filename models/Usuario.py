@@ -103,3 +103,17 @@ class Usuario:
         except Exception as e:
             result = "ID incorrecto"
         return result
+
+    def tomarAsistencia(self, id_venta):
+        sql = "select v.id_venta,dv.asientos from venta v inner join detalle_venta" \
+              " dv on v.id_venta=dv.id_venta where v.id_bus = ?"
+        try:
+            # abrir conexion
+            con = Connection().conexion()
+            cursor = con.cursor()
+            cursor.execute(sql, id_venta)
+            return cursor
+            cursor.close()
+        except Exception as e:
+            result = "ID incorrecto"
+        return result
