@@ -61,7 +61,7 @@ function saltar(e, id) {
     }
 }
 
-$('body').scrollspy({target: '#navbar-example'})
+$('body').scrollspy({ target: '#navbar-example' })
 
 function saltarselect(e) {
     $(".miClase").keypress(function (e) {
@@ -295,14 +295,55 @@ function EditarUsuario() {
     var nuevosaldo = $("#ModalNuevoSaldo").val();
 
     $.ajax({
-        url: '/EditarUsuarioPorId?id_usuario=' + id_usuario + '&nombre=' + nombre + '&paterno=' + paterno + '&materno=' + materno + 
-        '&dni=' + dni + '&nacimiento=' + nacimiento + '&telefono=' + telefono + '&direccion=' + direccion + '&departamento=' + departamento +
-        '&nuevosaldo=' + nuevosaldo,
+        url: '/EditarUsuarioPorId?id_usuario=' + id_usuario + '&nombre=' + nombre + '&paterno=' + paterno + '&materno=' + materno +
+            '&dni=' + dni + '&nacimiento=' + nacimiento + '&telefono=' + telefono + '&direccion=' + direccion + '&departamento=' + departamento +
+            '&nuevosaldo=' + nuevosaldo,
         dataType: 'json',
         success: function (data) {
             EnviarDatosEditar(id_usuario);
         }
     });
+}
+
+let myChart;
+
+function verEstadisticaAnio(anio) {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    if (myChart) {
+        myChart.destroy();
+    }
+    myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            datasets: [{
+                label: 'Importes Mensuales - Año '+anio,
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: ['black'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    })
+
+    let url = 'http://127.0.0.1:3000/verEstadisticaPorAnio?anio=' + anio
+    fetch(url)
+        .then(response => response.json())
+        .then(datos => mostrar(datos))
+        .catch(error => console.log(error))
+
+    const mostrar = (estadistica) => {
+        estadistica.forEach(element => {
+            myChart.data['labels'].push(element.mes)
+            myChart.data['datasets'][0].data.push(element.importe)
+        })
+        myChart.update('active');
+    }
 }
 
 function LimpiarModalEditar() {

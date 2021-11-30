@@ -616,6 +616,26 @@ def EditarUsuarioPorId():
     return jsonify(data)
 
 
+@app.route('/verEstadisticaPorAnio', methods=['GET'])
+def VerEstadisticaPorAnio():
+    data = []
+    try:
+        anio = request.args.get('anio')
+        cursor = Connection().conexion().cursor()
+        cursor.execute('VerEstadisticaPorAnio ?', anio)
+        #usuario = cursor.fetchall()
+
+        columns = [column[0] for column in cursor.description]
+        result = []
+        for row in cursor.fetchall():
+            result.append(dict(zip(columns, row)))
+        cursor.close()
+    except Exception as e:
+        data['mensaje'] = 'Error'
+        # jsonify convierte un arreglo a json
+    return jsonify(result)
+
+
 # para verificar si el archivo es la principal
 if __name__ == '__main__':
     # asignar puerto, el debug hace los cambios automaticos

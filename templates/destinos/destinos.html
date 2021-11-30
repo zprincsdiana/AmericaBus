@@ -1,80 +1,25 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+<div style="padding: 50px;">
 
-    <div class="container pt-5">
-        <div class="btn-group mb-2 pt-5">
-            <a class="nav-link dropdown-toggle dd" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-                Lista de opciones por aquí
-            </a>
+</div>
+<div class="container pt-3">
+    <div class="row">
+        {% for destino in data %}
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <img class="img-fluid" alt="100%x280" src="../static/images/{{ destino.imagen }}">
+                <div class="card-body">
+                    <h4 class="card-title"><a href="/detalle/{{ destino.id_destino }}"
+                            class="stretched-link text-decoration-none text-dark">{{ destino.titulo }}</a></h4>
+                    <p class="card-text">{{ destino.descripcion }}</p>
+                </div>
 
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="#">op 1</a>
-                <a class="dropdown-item" href="#">op 2</a>
-                <a class="dropdown-item" href="#">op 3</a>
             </div>
         </div>
-        <div class="btn-group mb-2">
-            <a class="nav-link dropdown-toggle dd" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-                Edad del conductor <b>22-50</b>
-            </a>
-
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="#">op 1</a>
-                <a class="dropdown-item" href="#">op 2</a>
-                <a class="dropdown-item" href="#">op 3</a>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <select class="form-control fa box-select bg-light ">
-                        <option selected class="fa">Destino</option>
-                        <option value="1">Lima - Ica</option>
-                        <option value="2">Lima - Piura</option>
-                        <option value="3">Lima - Huaraza</option>
-                        <option value="1">Lima - Ica</option>
-                        <option value="2">Lima - Piura</option>
-                        <option value="3">Lima - Huaraza</option>
-                        <option value="1">Lima - Ica</option>
-                        <option value="2">Lima - Piura</option>
-                        <option value="3">Lima - Huaraza</option>
-                    </select>
-                </div>
-
-                <div class="col-lg-3">
-                    <input type="date" class="form-control fa box-select bg-light" autocomplete="on" value="dd/mm/yyyy">
-                </div>
-
-                <div class="col-lg-3">
-                    <input type="date" class="form-control fa box-select bg-light" autocomplete="on" value="dd/mm/yyyy">
-                </div>
-
-                <div class="col-lg-2">
-                    <button class="form-control btn btn-success fa box-select w-50"> &#xf002;</button>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
-    <div class="container pt-3">
-        <div class="row">
-            {% for destino in data %}
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <img class="img-fluid" alt="100%x280"
-                         src="../static/images/{{ destino.imagen }}">
-                    <div class="card-body">
-                        <h4 class="card-title"><a href="/detalle/{{ destino.id_destino }}" class="stretched-link text-decoration-none text-dark">{{ destino.titulo }}</a></h4>
-                        <p class="card-text">{{ destino.descripcion }}</p>
-                    </div>
 
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-
-    </div>
+</div>
 {% endblock %}

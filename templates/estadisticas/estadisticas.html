@@ -2,122 +2,79 @@
 
 {% block body %}
 
-    <main class="login-form mt-5">
-        <div class="container mt-5">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card shadow">
-                        <div class="card-header">
-                            Gráficos Estadisticos
+<main class="login-form mt-5">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header">
+                        VENTAS POR AÑO
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <select class="form-control" name="anioEstadistica" id="anioEstadistica">
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                </select>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <button class="btn btn-success mb-2" onclick="verEstadisticaAnio($('#anioEstadistica').val())"><i
+                                        class="fas fa-search"></i>Buscar</button>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <blockquote class="blockquote mb-0">
-                                <p>Elija el gráfico que desea ver</p>
-                            </blockquote>
-                            <div id="accordion">
-                                <div class="card">
-                                    <div class="card-header" id="headingOne">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link" data-toggle="collapse"
-                                                    data-target="#collapseOne"
-                                                    aria-expanded="true" aria-controls="collapseOne">
-                                                Barras
-                                            </button>
-                                        </h5>
+                        <br>
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                                        aria-expanded="true" aria-controls="collapseOne">
+                                        Grafico Estadistico de ventas por Mes
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                data-parent="#accordion">
+                                <div class="card-body">
+                                    <div>
+                                        <canvas id="myChart"></canvas>
                                     </div>
+                                    <!-- <script>
+                                            const labels = [
+                                                'January',
+                                                'February',
+                                                'March',
+                                                'April',
+                                                'May',
+                                                'June',
+                                            ];
+                                            const data = {
+                                                labels: labels,
+                                                datasets: [{
+                                                    label: 'My First dataset',
+                                                    backgroundColor: 'rgb(255, 99, 132)',
+                                                    borderColor: 'rgb(255, 99, 132)',
+                                                    data: [10, 9, 15],
+                                                }]
+                                            };
+                                            const config = {
+                                                type: 'line',
+                                                data: data,
+                                                options: {}
+                                            };
 
-                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                         data-parent="#accordion">
-                                        <div class="card-body">
-                                            <div>
-                                                <canvas id="myChart"></canvas>
-                                            </div>
-                                            <script>
-                                                const labels = [
-                                                    'January',
-                                                    'February',
-                                                    'March',
-                                                    'April',
-                                                    'May',
-                                                    'June',
-                                                ];
-                                                const data = {
-                                                    labels: labels,
-                                                    datasets: [{
-                                                        label: 'My First dataset',
-                                                        backgroundColor: 'rgb(255, 99, 132)',
-                                                        borderColor: 'rgb(255, 99, 132)',
-                                                        data: [10, 9, 15],
-                                                    }]
-                                                };
-                                                const config = {
-                                                    type: 'line',
-                                                    data: data,
-                                                    options: {}
-                                                };
+                                            // === include 'setup' then 'config' above ===
 
-                                                // === include 'setup' then 'config' above ===
-
-                                                var myChart1 = new Chart(
-                                                    document.getElementById('myChart'),
-                                                    config
-                                                );
-                                            </script>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-header" id="headingTwo">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link collapsed" data-toggle="collapse"
-                                                    data-target="#collapseTwo"
-                                                    aria-expanded="false" aria-controls="collapseTwo">
-                                                Pastel
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                         data-parent="#accordion">
-                                        <div class="card-body">
-                                            <div>
-                                                <canvas id="myChart1"></canvas>
-                                            </div>
-                                            <script>
-                                                const labels1 = [
-                                                    'January',
-                                                    'February',
-                                                    'March',
-                                                    'April',
-                                                    'May',
-                                                    'June',
-                                                ];
-                                                const data1 = {
-                                                    labels: labels1,
-                                                    datasets: [{
-                                                        label: 'My First dataset',
-                                                        backgroundColor: ['rgb(255, 99, 132)',
-                                                            'rgb(66, 134, 244)',
-                                                            'rgb(74, 135, 72)',
-                                                            'rgb(229, 89, 50)'],
-                                                        borderColor: 'rgb(255, 99, 132)',
-                                                        data: [0, 10, 5, 2, 20, 30, 45],
-                                                    }]
-                                                };
-                                                const config1 = {
-                                                    type: 'pie',
-                                                    data: data1,
-                                                    options: {}
-                                                };
-
-                                                // === include 'setup' then 'config' above ===
-
-                                                var myChart = new Chart(
-                                                    document.getElementById('myChart1'),
-                                                    config1
-                                                );
-                                            </script>
-                                        </div>
-                                    </div>
+                                            var myChart1 = new Chart(
+                                                document.getElementById('myChart'),
+                                                config
+                                            );
+                                        </script> -->
                                 </div>
                             </div>
                         </div>
@@ -125,6 +82,7 @@
                 </div>
             </div>
         </div>
-        </div>
-    </main>
+    </div>
+    </div>
+</main>
 {% endblock %}
