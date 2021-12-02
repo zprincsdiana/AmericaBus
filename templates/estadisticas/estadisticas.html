@@ -8,7 +8,7 @@
             <div class="col-md-8">
                 <div class="card shadow">
                     <div class="card-header">
-                        VENTAS POR AÑO
+                        ESTADISTICAS
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -23,7 +23,8 @@
 
                             </div>
                             <div class="col-sm-3">
-                                <button class="btn btn-success mb-2" onclick="verEstadisticaAnio($('#anioEstadistica').val())"><i
+                                <button class="btn btn-success mb-2"
+                                    onclick="verEstadisticaAnio($('#anioEstadistica').val())"><i
                                         class="fas fa-search"></i>Buscar</button>
                             </div>
                         </div>
@@ -33,7 +34,7 @@
                                 <h5 class="mb-0">
                                     <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
                                         aria-expanded="true" aria-controls="collapseOne">
-                                        Grafico Estadistico de ventas por Mes
+                                        Ventas Anuales por Mes
                                     </button>
                                 </h5>
                             </div>
@@ -44,37 +45,44 @@
                                     <div>
                                         <canvas id="myChart"></canvas>
                                     </div>
-                                    <!-- <script>
-                                            const labels = [
-                                                'January',
-                                                'February',
-                                                'March',
-                                                'April',
-                                                'May',
-                                                'June',
-                                            ];
-                                            const data = {
-                                                labels: labels,
-                                                datasets: [{
-                                                    label: 'My First dataset',
-                                                    backgroundColor: 'rgb(255, 99, 132)',
-                                                    borderColor: 'rgb(255, 99, 132)',
-                                                    data: [10, 9, 15],
-                                                }]
-                                            };
-                                            const config = {
-                                                type: 'line',
-                                                data: data,
-                                                options: {}
-                                            };
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <select class="form-control" name="anioEstadistica2" id="anioEstadistica2">
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                </select>
 
-                                            // === include 'setup' then 'config' above ===
+                            </div>
+                            <div class="col-sm-3">
+                                <button class="btn btn-success mb-2"
+                                    onclick="verEstadisticaDestinos($('#anioEstadistica2').val())"><i
+                                        class="fas fa-search"></i>Buscar</button>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                                        aria-expanded="true" aria-controls="collapseOne">
+                                        Ventas Anuales por Destino
+                                    </button>
+                                </h5>
+                            </div>
 
-                                            var myChart1 = new Chart(
-                                                document.getElementById('myChart'),
-                                                config
-                                            );
-                                        </script> -->
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                data-parent="#accordion">
+                                <div class="card-body">
+                                    <div>
+                                        <canvas id="myChart2"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>

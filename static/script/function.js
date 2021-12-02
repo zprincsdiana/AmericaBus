@@ -316,9 +316,21 @@ function verEstadisticaAnio(anio) {
         type: 'bar',
         data: {
             datasets: [{
-                label: 'Importes Mensuales - Año '+anio,
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: ['black'],
+                label: 'Importes Mensuales - Año ' + anio,
+                backgroundColor: ['rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
                 borderWidth: 1
             }]
         },
@@ -343,6 +355,59 @@ function verEstadisticaAnio(anio) {
             myChart.data['datasets'][0].data.push(element.importe)
         })
         myChart.update('active');
+    }
+}
+
+let myChart2;
+
+function verEstadisticaDestinos(anio) {
+    var ctx = document.getElementById('myChart2').getContext('2d');
+    if (myChart2) {
+        myChart2.destroy();
+    }
+    myChart2 = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                label: 'Importes Por Destinos - Años ' + anio,
+                backgroundColor: ['rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    })
+
+    let url = 'http://127.0.0.1:3000/VerEstadisticaPorDestinos?anio=' + anio
+    fetch(url)
+        .then(response => response.json())
+        .then(datos => mostrar(datos))
+        .catch(error => console.log(error))
+
+    const mostrar = (estadistica) => {
+        estadistica.forEach(element => {
+            myChart2.data['labels'].push(element.titulo)
+            myChart2.data['datasets'][0].data.push(element.importe)
+        })
+        myChart2.update('active');
     }
 }
 
