@@ -1,5 +1,5 @@
 from flask.helpers import flash
-
+from flask_cors import CORS, cross_origin
 from models.AsientoBus import AsientoBus
 from models.Destino import Destino
 from flask.json import dump
@@ -18,7 +18,7 @@ app = Flask(__name__)
 # settings
 app.secret_key = 'mysecretkey'
 
-
+CORS(app)
 @app.after_request
 def add_header(r):
     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -615,7 +615,7 @@ def EditarUsuarioPorId():
         # jsonify convierte un arreglo a json
     return jsonify(data)
 
-
+@cross_origin
 @app.route('/verEstadisticaPorAnio', methods=['GET'])
 def VerEstadisticaPorAnio():
     data = []
@@ -635,6 +635,7 @@ def VerEstadisticaPorAnio():
         # jsonify convierte un arreglo a json
     return jsonify(result)
 
+@cross_origin
 @app.route('/VerEstadisticaPorDestinos', methods=['GET'])
 def VerEstadisticaPorDestinos():
     data = []

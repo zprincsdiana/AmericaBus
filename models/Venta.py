@@ -4,7 +4,7 @@ from db.config import Connection
 class Venta:
 
     def crearVenta(self, id_usuario, id_bus, id_destino):
-        sql = "INSERT INTO venta(id_usuario,id_bus,id_destino,Registro,asistencia,tipo,Estado) VALUES(?,?,?,getdate(),0,0,0)"
+        sql = "INSERT INTO venta(id_usuario,id_bus,id_destino,Registro,asistencia,tipo,Estado,termino_reseña) VALUES(?,?,?,getdate(),0,0,0,0)"
         try:
             # abrir conexion
             con = Connection().conexion()
